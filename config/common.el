@@ -89,10 +89,21 @@
   :cursor-type 'box)
 
 
-;; Common functions
+;;; Common functions
+
 (defun read-file (file)
   "Read contents of FILE and return as a string."
   (with-temp-buffer
     (insert-file-contents file)
     (buffer-string)))
+
+(defun ensure-dir (dir)
+  "Ensure DIR exists unless it is an unsubstituted var.
+Returns expanded dir name on success."
+  (unless (and (string-prefix-p "@" dir)
+               (string-suffix-p "@" dir))
+    (let ((dir-path (expand-file-name dir)))
+      (unless (file-exists-p dir-path)
+        (mkdir dir-path t))
+      dir-path)))
 

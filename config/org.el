@@ -19,7 +19,7 @@
 
 ;;; gtd
 
-(defvar gtd-directory "@GTD_DIR@")
+(defvar gtd-directory (ensure-dir "@GTD_DIR@"))
 
 (defun gtd-file (file)
   "Get path of a FILE in gtd."
@@ -121,8 +121,6 @@ LOC can be `current' or `other'."
 
 (use-package org-agenda
   :config
-  (unless (file-exists-p gtd-directory)
-    (mkdir gtd-directory t))
   (defun my-org-agenda-prefix ()
     "Prefix string for org agenda items."
     (concat
@@ -212,24 +210,21 @@ LOC can be `current' or `other'."
 
 ;;; notes
 
-(defvar note-directory (expand-file-name "@NOTES_DIR@"))
+(defvar notes-directory (ensure-dir "@NOTES_DIR@"))
 
 (use-package denote
   :hook
   (dired-mode . denote-dired-mode-in-directories)
   :custom
-  (denote-directory note-directory)
+  (denote-directory notes-directory)
   (denote-backlinks-show-context t)
-  (denote-dired-directories (list note-directory))
+  (denote-dired-directories (list notes-directory))
   (denote-dired-directories-include-subdirectories t)
   (denote-prompts '(title))
   (denote-save-buffers t)
   (denote-date-format "%FT%T%z")
   :custom-face
-  (denote-faces-link ((t :foreground "turquoise" :underline t)))
-  :config
-  (unless (file-exists-p note-directory)
-    (mkdir note-directory t)))
+  (denote-faces-link ((t :foreground "turquoise" :underline t))))
 
 ;; for searching
 (use-package consult-denote
