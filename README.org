@@ -2,3 +2,20 @@
 
 My personal Emacs configuration in Nix.
 
+** Usage
+
+Run it without installing:
+#+begin_src shell
+  nix run github:DCsunset/emacs-config
+
+  # or clone the repo locally first
+  git clone https://github.com/DCsunset/emacs-config.git
+  cd emacs-config
+  nix run .
+#+end_src
+
+
+** License
+
+AGPL-3.0
+
