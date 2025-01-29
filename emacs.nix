@@ -42,4 +42,7 @@ let
       packageRequires = userPackages;
     };
   in userPackages ++ [ userConfig ];
-in emacsWithPackages extraPackages
+in (emacsWithPackages extraPackages).overrideAttrs {
+  # used by nix bundle
+  pname = "emacs";
+}
