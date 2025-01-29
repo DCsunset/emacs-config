@@ -1,8 +1,26 @@
-;;; Common packages and functions
+;;;; Common packages and functions
 
-;;; General config
+;;; Common functions
 
-;; UI config
+(defun read-file (file)
+  "Read contents of FILE and return as a string."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (buffer-string)))
+
+(defun ensure-dir (dir)
+  "Ensure DIR exists unless it is an unsubstituted var.
+Returns expanded dir name on success."
+  (unless (and (string-prefix-p "@" dir)
+               (string-suffix-p "@" dir))
+    (let ((dir-path (expand-file-name dir)))
+      (unless (file-exists-p dir-path)
+        (mkdir dir-path t))
+      dir-path)))
+
+
+;;; UI config
+
 (when (display-graphic-p)
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
@@ -20,11 +38,11 @@
 (setq-default xref-history-storage 'xref-window-local-history)
 
 ;; put backup files in a dedicated dir
-(setq-default backup-directory-alist `((".*" . ,(concat user-emacs-directory "backups/"))))
+(setq-default backup-directory-alist `((".*" . ,(ensure-dir (concat user-emacs-directory "backups/")))))
 (setq-default
  auto-save-file-name-transforms
  ;; strip directories (modified from default value)
- `(("\\`\\(/[^/]*:\\)?\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat user-emacs-directory "auto-saves/" "\\3") t)))
+ `(("\\`\\(/[^/]*:\\)?\\([^/]*/\\)*\\([^/]*\\)\\'" ,(ensure-dir (concat user-emacs-directory "auto-saves/" "\\3")) t)))
 
 ;; show paren when cursor is on the closing one rather than behind it except insert mode
 (advice-add show-paren-data-function
@@ -36,7 +54,8 @@
                     ((looking-at "\\s)")
                      (save-excursion (forward-char 1) (funcall orig-fun))))))
 
-;;; use-package
+;;; packages
+
 ;; don't use eval-when-compile to avoid bind-key errors
 (require 'use-package)
 
@@ -87,23 +106,4 @@
 ;; major-mode-specific state (keys defined in substates)
 (modaled-define-state "major"
   :cursor-type 'box)
-
-
-;;; Common functions
-
-(defun read-file (file)
-  "Read contents of FILE and return as a string."
-  (with-temp-buffer
-    (insert-file-contents file)
-    (buffer-string)))
-
-(defun ensure-dir (dir)
-  "Ensure DIR exists unless it is an unsubstituted var.
-Returns expanded dir name on success."
-  (unless (and (string-prefix-p "@" dir)
-               (string-suffix-p "@" dir))
-    (let ((dir-path (expand-file-name dir)))
-      (unless (file-exists-p dir-path)
-        (mkdir dir-path t))
-      dir-path)))
 
