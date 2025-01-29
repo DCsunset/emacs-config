@@ -25,7 +25,7 @@ let
       src = writeText "default.el"
         (dc-lib.substituteVars
           ({
-            LUA_LS_CONIFG = "${./config/lsp-config}/lua-ls-config.lua";
+            LUA_LS_CONIFG = "${./config/lsp}/lua-ls-config.lua";
           } // configVars)
           (dc-lib.readFiles [
             ./config/common.el
