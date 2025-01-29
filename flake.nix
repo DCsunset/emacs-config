@@ -24,9 +24,16 @@
           overlays = [ nur-dcsunset.overlays.pkgs ];
         };
         packages = {
-          default = pkgs.callPackage ./emacs.nix {
+          default = self'.packages.gui;
+          gui = pkgs.callPackage ./emacs.nix {
             dc-lib = nur-dcsunset.lib;
             extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
+            emacs = pkgs.emacs30;
+          };
+          nox = pkgs.callPackage ./emacs.nix {
+            dc-lib = nur-dcsunset.lib;
+            extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
+            emacs = pkgs.emacs30-nox;
           };
         };
       };
