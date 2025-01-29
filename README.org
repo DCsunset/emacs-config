@@ -7,12 +7,61 @@ My personal Emacs configuration in Nix.
 Run it without installing:
 #+begin_src shell
   nix run github:DCsunset/emacs-config
+  # or using emacs-nox
+  nix run github:DCsunset/emacs-config#nox
 
   # or clone the repo locally first
   git clone https://github.com/DCsunset/emacs-config.git
   cd emacs-config
   nix run .
 #+end_src
+
+Using with Nix Flakes:
+#+begin_src nix
+  {
+    inputs = {
+      nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+      flake-parts.url = "github:hercules-ci/flake-parts";
+      emacs-dcsunset = {
+        url = "github:DCsunset/emacs-config";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.flake-parts.follows = "flake-parts";
+      };
+    };
+
+    outputs = inputs@{ flake-parts, ... }:
+      flake-parts.lib.mkFlake { inherit inputs; } {
+        systems = [ "x86_64-linux" ];
+        perSystem = { pkgs, system, ... }: {
+          devShell = {
+            default = pkgs.mkShell {
+              packages = [
+                inputs.emacs-dcsunset.packages.${system}.default.override {
+                  configVars = {
+                    # ...
+                  };
+                }
+              ];
+            };
+          };
+        };
+      };
+  }
+#+end_src
+
+
+** Supported Config Vars
+
+| Name          | Description                | Default                                     |
+|---------------+----------------------------+---------------------------------------------|
+| LUA_LS_CONFIG | lua-language-server config | See =config/lsp/lua-ls-config.lua= |
+| GTD_DIR       | dir for GTD items          | -                                           |
+| NOTES_DIR     | dir for notes              | -                                           |
+| OLLAMA_HOST   | Ollama host                | -                                           |
+| IRC_SERVER    | IRC server                 | -                                           |
+| IRC_USER      | IRC user                   | -                                           |
+| IRC_NICK      | IRC nickname               | -                                           |
+| IRC_PASS_FILE | File storing IRC password  | -                                           |
 
 
 ** License
