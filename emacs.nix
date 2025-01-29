@@ -1,7 +1,7 @@
 {
   dc-lib,
   emacsPackagesFor,
-  emacs30,
+  emacs,
   writeText,
 
   # Extra emacs packages
@@ -16,7 +16,7 @@
 
 let
   # reference: home-manager
-  emacsWithPackages = (emacsPackagesFor emacs30).emacsWithPackages;
+  emacsWithPackages = (emacsPackagesFor emacs).emacsWithPackages;
   extraPackages = epkgs: let
     userPackages = (import ./epkgs.nix) { inherit extraEpkgs epkgs; };
     userConfig = epkgs.trivialBuild {
