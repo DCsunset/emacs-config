@@ -3,6 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     nur-dcsunset = {
       url = "github:DCsunset/nur-packages";
@@ -10,7 +15,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, flake-parts, nur-dcsunset, ... }:
+  outputs = inputs@{ nixpkgs, emacs-overlay, flake-parts, nur-dcsunset, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" ];
 
@@ -21,7 +26,10 @@
       perSystem = { self', system, pkgs, lib, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [ nur-dcsunset.overlays.pkgs ];
+          overlays = [
+            nur-dcsunset.overlays.pkgs
+            emacs-overlay.overlays.package
+          ];
         };
         packages = {
           default = self'.packages.gui;
