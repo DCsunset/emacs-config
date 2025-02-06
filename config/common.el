@@ -61,9 +61,7 @@ Returns expanded dir name on success."
 
 (use-package kkp
   :config
-  (global-kkp-mode +1)
-  ;; translate some keys as kkp will overwrite them to another key in terminal
-  (keymap-set key-translation-map "M-<return>" "M-RET"))
+  (global-kkp-mode +1))
 
 ;; faster loading for large files by chunks
 (use-package vlf-setup

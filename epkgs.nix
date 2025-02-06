@@ -6,9 +6,8 @@ with epkgs; [
   dash
   nerd-icons
   visual-fill-column
-
+  kkp
   extraEpkgs.modaled
-  extraEpkgs.kkp
 
   ## check.el
   sideline
