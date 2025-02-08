@@ -45,11 +45,8 @@
 
 ;;; projectile
 (use-package projectile
-  :commands (projectile-mode
-             projectile-find-file
-             projectile-ripgrep)
-  :init
-  (projectile-mode 1))
+  :hook
+  (after-init . projectile-mode))
 
 ;;; for projectile-ripgrep
 (use-package rg)
