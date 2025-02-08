@@ -71,6 +71,23 @@ CMD1 for \\`mouse-1' and CMD3 for \\`mouse-3'."
                  'local-map mode-line-coding-system-map)
      " ")))
 
+;;; input method
+(defface my-modeline-input-method-face
+  '((t :weight bold :foreground "#feacd0"))
+  "Face for my-modeline-input-method.")
+(defvar my-modeline--input-method-map
+  (my-modeline-def-map nil #'set-input-method))
+
+(my-modeline-def-construct my-modeline-input-method
+  (when current-input-method
+    (list
+     " "
+     (propertize current-input-method
+                 'face 'my-modeline-input-method-face
+                 'help-echo 'mode-line-mule-info-help-echo
+                 'local-map my-modeline--input-method-map)
+     " ")))
+
 ;;; buffer
 (defun my-buffer-path ()
   "Get buffer path with home substituted."
@@ -181,6 +198,9 @@ CMD1 for \\`mouse-1' and CMD3 for \\`mouse-3'."
       'local-map my-modeline--flymake-note-map)
      " ")))
 
+;;; input method
+
+
 ;;; git
 (defvar-local my-modeline--git-info nil
   "A list of (dirty branch); use a variable for caching.")
@@ -233,6 +253,7 @@ CMD1 for \\`mouse-1' and CMD3 for \\`mouse-3'."
                 my-modeline-eglot
                 my-modeline-flymake
                 my-modeline-encoding
+                my-modeline-input-method
                 my-modeline-git
                 my-modeline-major-mode))
 
