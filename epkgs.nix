@@ -89,6 +89,7 @@ with epkgs; [
   ellama
 
   # misc
+  esup
   beframe
   undo-fu
   vundo

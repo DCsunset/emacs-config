@@ -20,6 +20,11 @@
   (:map transient-map
         ("<escape>" . transient-quit-one)))
 
+(use-package esup
+  :custom
+  ;; work around byte-compiled error: https://github.com/jschaf/esup/issues/85
+  (esup-depth 0))
+
 (use-package minions
   :commands minions-minor-modes-menu)
 
