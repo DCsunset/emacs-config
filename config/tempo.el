@@ -1,9 +1,7 @@
 ;;; Tempo template definitions
 
 (use-package uuidgen
-  :commands (uuidgen-1
-             uuidgen-4
-             uuidgen))
+  :defer t)
 
 (defun my-template-handler (arg)
   "Handle custom symbol as ARG in my tempo templates."
@@ -17,9 +15,7 @@
   "Tempo match finder for my.")
 
 (use-package tempo
-  :commands (tempo-define-template
-             tempo-use-tag-list
-             tempo-complete-tag)
+  :defer t
   :config
   (setq tempo-interactive t)
   (setq tempo-user-elements

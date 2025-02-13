@@ -4,7 +4,8 @@
 
 ;; direnv
 (use-package envrc
-  :hook (after-init . envrc-global-mode))
+  :hook
+  (after-init . envrc-global-mode))
 
 ;; make hl-line more distinguishable (for dired)
 (use-package hl-line
@@ -17,7 +18,8 @@
   (after-init . projectile-mode))
 
 ;;; for projectile-ripgrep
-(use-package rg)
+(use-package rg
+  :defer t)
 
 ;;; dired
 (use-package nerd-icons-dired
@@ -130,12 +132,12 @@
 (add-hook 'modaled-dired-substate-mode-hook #'dired-highlight)
 
 (use-package dired-sidebar
-  :commands (dired-sidebar-toggle-sidebar
-             dired-sidebar-subtree-toggle)
-  :config
-  (setq dired-sidebar-theme 'nerd))
+  :defer t
+  :custom
+  (dired-sidebar-theme 'nerd))
 
 (use-package consult
+  :defer t
   :config
   (defvar beframe-consult-source
     `( :name "Buffers (current frame)"

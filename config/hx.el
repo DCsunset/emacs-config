@@ -1,7 +1,6 @@
 ;;; hx.el --- define Keybindings similar to helix using modaled  -*- lexical-binding: t; -*-
 
-(use-package highlight
-  :commands (hlt-unhighlight-region hlt-highlight-region))
+(use-package highlight)
 
 ;; global pair config
 (defvar hx-matching-pairs
@@ -28,8 +27,6 @@
 
 ;; for matching pairs
 (use-package expand-region
-  :commands (er/mark-outside-pairs
-             er/mark-outside-quotes)
   :hook  ; set different pairs based on major mode
   (emacs-lisp-mode . (lambda () (hx-update-pairs '("'" "`") '(("`" . "'")))))
   (rust-ts-mode . (lambda () (hx-update-pairs '() '(("|" . "|")))))

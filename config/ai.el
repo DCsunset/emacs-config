@@ -1,6 +1,6 @@
 (use-package ellama
   :commands (make-llm-ollama)
-  :init
+  :config
   (require 'llm-ollama)
   (let ((coding-model (make-llm-ollama
                        :host "@OLLAMA_HOST@"

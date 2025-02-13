@@ -2,16 +2,16 @@
 
 ;; zoom globally instead of per buffer
 (use-package default-text-scale
-  :commands default-text-scale-mode
+  :hook
+  (after-init . default-text-scale-mode)
   :bind
   (:map default-text-scale-mode-map
         ("C-=" . default-text-scale-increase)
         ("C--" . default-text-scale-decrease)
         ("C-0" . default-text-scale-reset))
-  :init
-  (default-text-scale-mode 1)
   :custom
   (default-text-scale-amount 10))
+
 ;; Set default font size for GUI
 (set-frame-font "Monospace 12" nil t)
 
@@ -21,17 +21,19 @@
         ("<escape>" . transient-quit-one)))
 
 (use-package esup
+  :defer t
   :custom
   ;; work around byte-compiled error: https://github.com/jschaf/esup/issues/85
   (esup-depth 0))
 
 (use-package minions
-  :commands minions-minor-modes-menu)
+  :defer t)
 
 ;; rainbow-mode highlights color codes
 (use-package rainbow-mode
   :commands rainbow-mode
-  :hook (after-init  . global-rainbow-mode))
+  :hook
+  (after-init . global-rainbow-mode))
 ;; enable it by default
 (define-globalized-minor-mode global-rainbow-mode
   rainbow-mode
@@ -39,29 +41,28 @@
   :group 'rainbow)
 
 (use-package hl-todo
-  :commands global-hl-todo-mode
-  :init
-  (setq hl-todo-keyword-faces
-        '(("TODO" . "red")
-          ("FIXME" . "red")
-          ("BUG" . "red")
-          ("WAITING" . "orchid")
-          ("HACK" . "sandy brown")))
-  (global-hl-todo-mode))
+  :hook
+  (after-init . global-hl-todo-mode)
+  :custom
+  (hl-todo-keyword-faces . '(("TODO" . "red")
+                             ("FIXME" . "red")
+                             ("BUG" . "red")
+                             ("WAITING" . "orchid")
+                             ("HACK" . "sandy brown"))))
 
 (use-package dashboard
-  :commands dashboard-setup-startup-hook
-  :init
-  (setq dashboard-items '((recents  . 5)
-                          (projects . 5)
-                          (bookmarks . 5)))
-  (setq dashboard-icon-type 'nerd-icons)
-  (setq dashboard-display-icons-p t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
+  :hook
+  (after-init . dashboard-setup-startup-hook)
+  :custom
+  (dashboard-items '((recents . 5)
+                     (projects . 5)
+                     (bookmarks . 5)))
+  (dashboard-icon-type 'nerd-icons)
+  (dashboard-display-icons-p t)
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
   ;; show info about the packages loaded and the init time
-  (setq dashboard-set-init-info t)
-  (dashboard-setup-startup-hook))
+  (dashboard-set-init-info t))
 
 ;; xclip (to support clipboard in Xorg & Wayland)
 ;; need xclip or wl-clipboard-rs
@@ -73,7 +74,8 @@
 
 ;; tabs
 (use-package centaur-tabs
-  :demand t
+  :hook
+  (after-init . centaur-tabs-mode)
   :custom-face
   (centaur-tabs-active-bar-face ((t :background "#c4569e")))
   :custom
@@ -88,8 +90,7 @@
   ;; hide in dired sidebar
   (setq centaur-tabs-hide-predicate
         (lambda () (memq major-mode '(dired-sidebar-mode
-                                      org-agenda-mode))))
-  (centaur-tabs-mode 1))
+                                      org-agenda-mode)))))
 
 ;; Fix from https://github.com/ema2159/centaur-tabs/issues/127#issuecomment-1126913492
 (defun fix-centaur-tabs ()
@@ -105,37 +106,28 @@
               (fix-centaur-tabs)))
 
 (use-package which-key
-  :demand t
+  :hook
+  (after-init . which-key-mode)
   :custom
   (which-key-idle-delay 0.01)  ; show desc immediately
-  (which-key-sort-order 'which-key-description-order)
-  :config
-  (which-key-mode))
+  (which-key-sort-order 'which-key-description-order))
 
 ;;; Completion UI in minibuffer
 (use-package vertico
-  :demand t
   ;; Tidy shadowed file names in find-file
   :hook
-  (rfn-eshadow-update-overlay . vertico-directory-tidy)
-  :config
-  ;; call mode in :init to enable it immediately
-  (vertico-mode))
+  (after-init . vertico-mode)
+  (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;;; Enable rich annotations in minibuffer completion
 (use-package marginalia
-  :demand t
+  :hook
+  (after-init . marginalia-mode)
   ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
   ;; available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-  ;; The :init section is always executed.
-  :config
-  ;; Marginalia must be activated in the :init section of use-package such that
-  ;; the mode gets enabled right away. Note that this forces loading the
-  ;; package.
-  (marginalia-mode))
+         ("M-A" . marginalia-cycle)))
 
 ;;; Fuzzy completion style
 (use-package orderless
@@ -145,14 +137,13 @@
 
 ;;; icons for completion UI in minibuffer
 (use-package nerd-icons-completion
-  :demand t
   :config
   (nerd-icons-completion-mode))
 
 ;;; company completion
 (use-package company
-  :commands (company-manual-begin company-abort)
-  :hook (after-init  . global-company-mode)
+  :hook
+  (after-init . global-company-mode)
   :bind (:map company-active-map
               ;; complete selection using tab
               ;; (must use TAB for terminal and <tab> for gui)
@@ -178,30 +169,30 @@
 
 ;; Manage popup window
 (use-package popwin
-  :demand t
+  :hook
+  (after-init . popwin-mode)
   :config
-  (popwin-mode 1)
   ;; make help window stick around
   (add-to-list 'popwin:special-display-config '(help-mode :stick t))
   (add-to-list 'popwin:special-display-config '("\\*eldoc.*\\*" :regexp t :noselect t)))
 
-
 ;; git
 (use-package diff-hl
-  :demand t
-  :config
-  (global-diff-hl-mode 1)
-  (diff-hl-flydiff-mode 1)
+  :hook
+  (after-init . global-diff-hl-mode)
+  (after-init . diff-hl-flydiff-mode)
   ;; use margin mode to support terminal emacs
-  (diff-hl-margin-mode 1))
+  (after-init . diff-hl-margin-mode))
 
 ;;; inline git blame
 (use-package blamer
+  :defer t
   :custom
   (blamer-idle-time 0.2)
   (blamer-min-offset 70))
 
 (use-package magit
+  :defer t
   :hook
   (magit-pre-refresh . diff-hl-magit-pre-refresh)
   (magit-post-refresh . diff-hl-magit-post-refresh)
@@ -248,7 +239,7 @@
 
 ;;; vterm (insert as default state)
 (use-package vterm
-  :commands (vterm-reset-cursor-point vterm--self-insert)
+  :defer t
   :hook
   ((vterm-mode special-mode) . (lambda ()
                                  ;; turn off trailing whitespaces highlighting
@@ -281,7 +272,7 @@
   :major '(vterm-mode))
 
 (use-package vterm-toggle
-  :commands vterm-toggle
+  :defer t
   :config
   ;; show vterm buffer in bottom side
   ;; must be executed after the pkg is load to make sure vterm-buffer-name is defined
@@ -301,7 +292,8 @@
 
 ;;; beframe
 (use-package beframe
-  :hook (after-init . beframe-mode))
+  :hook
+  (after-init . beframe-mode))
 
 ;;; undo
 (use-package undo-fu)
@@ -330,6 +322,7 @@
 
 ;;; erc
 (use-package erc
+  :defer t
   :hook
   (erc-mode . (lambda () (setq show-trailing-whitespace nil)))
   (modaled-insert-state-mode . (lambda ()

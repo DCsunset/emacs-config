@@ -1,8 +1,6 @@
 ;;; Syntax checking
 
 (use-package flymake-cspell
-  :commands (flymake-cspell-setup
-             flymake-cspell-set-language-ids)
   :init
   (setq flymake-cspell-diagnostic-type :note)
   :config
@@ -11,13 +9,14 @@
    ("org" org-mode)))
 
 (use-package flymake
-  :commands flymake-mode)
+  :hook
+  (after-init . global-flymake-mode))
 
 (use-package sideline
   :hook
   (flymake-mode . sideline-mode)
-  :init
-  (setq sideline-backends-right '(sideline-flymake)))
+  :custom
+  (sideline-backends-right '(sideline-flymake)))
 
 (define-globalized-minor-mode global-flymake-mode flymake-mode
   (lambda ()
@@ -29,7 +28,4 @@
              'erc-mode)
       (flymake-cspell-setup)
       (flymake-mode 1))))
-
-;; start on init
-(add-hook 'after-init-hook #'global-flymake-mode)
 

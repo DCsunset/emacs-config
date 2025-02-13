@@ -59,9 +59,15 @@ Returns expanded dir name on success."
 ;; don't use eval-when-compile to avoid bind-key errors
 (require 'use-package)
 
+(use-package nerd-icons
+  :demand t)
+
+(use-package modaled
+  :demand t)
+
 (use-package kkp
-  :config
-  (global-kkp-mode +1))
+  :hook
+  (after-init . global-kkp-mode))
 
 ;; faster loading for large files by chunks
 (use-package vlf-setup
@@ -72,20 +78,18 @@ Returns expanded dir name on success."
 
 (use-package dash)
 
-(use-package nerd-icons)
-
 (use-package isearch-mb
-  :hook (after-init  . isearch-mb-mode)
-  :bind (:map isearch-mb-minibuffer-map
-              ("C-r" . consult-isearch-history))
+  :hook
+  (after-init . isearch-mb-mode)
+  :bind
+  (:map isearch-mb-minibuffer-map
+        ("C-r" . consult-isearch-history))
   :config
   (add-to-list 'isearch-mb--with-buffer #'consult-isearch-history))
 
 (use-package visual-fill-column
   :config
   (setq-default visual-fill-column-center-text t))
-
-(use-package modaled)
 
 (defun modaled-set-insert-state ()
   "Set insert modaled state."

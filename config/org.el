@@ -14,6 +14,7 @@
 
 ;; for CJK font alignment in table
 (use-package valign
+  :defer t
   :hook
   (org-mode . valign-mode))
 
@@ -32,6 +33,7 @@
 
 ;; org-mode
 (use-package org
+  :defer t
   :hook
   (org-mode . org-indent-mode)
   (org-mode . (lambda ()
@@ -120,6 +122,7 @@ LOC can be `current' or `other'."
     (org-open-at-point)))
 
 (use-package org-agenda
+  :defer t
   :config
   (defun my-org-agenda-prefix ()
     "Prefix string for org agenda items."
@@ -136,6 +139,7 @@ LOC can be `current' or `other'."
 
 
 (use-package org-super-agenda
+  :defer t
   :hook
   (org-agenda-mode . org-super-agenda-mode)
   :config
@@ -213,6 +217,7 @@ LOC can be `current' or `other'."
 (defvar notes-directory (ensure-dir "@NOTES_DIR@"))
 
 (use-package denote
+  :defer t
   :hook
   (dired-mode . denote-dired-mode-in-directories)
   :custom
@@ -228,6 +233,7 @@ LOC can be `current' or `other'."
 
 ;; for searching
 (use-package consult-denote
+  :defer t
   :custom
   (consult-denote-find-command #'consult-fd)
   (consult-denote-grep-command #'consult-ripgrep))
@@ -269,6 +275,7 @@ LOC can be `current' or `other'."
   (setq-local face-remapping-alist nil))
 
 (use-package org-present
+  :defer t
   :hook
   (org-present-mode . my/org-present-start)
   (org-present-mode-quit . my/org-present-end))

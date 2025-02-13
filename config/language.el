@@ -23,6 +23,7 @@
               show-trailing-whitespace t)
 
 (use-package csv-mode
+  :mode "\\.csv\\'"
   :hook
   (csv-mode . csv-align-mode)
   ;; set first line as header automatically
@@ -53,9 +54,13 @@
                                   indent-tabs-mode nil))))
 
 (use-package beancount
-  :mode ("\\.beancount\\'" . beancount-mode))
+  :mode
+  ("\\.beancount\\'" . beancount-mode))
 
-(use-package jtsx)
+(use-package jtsx
+  :mode
+  ("\\.jsx\\'" . jtsx-jsx-mode)
+  ("\\.tsx\\'" . jtsx-tsx-mode))
 
 (use-package d2-mode
   :mode "\\.d2\\'"
@@ -71,15 +76,18 @@
     :major '(d2-mode)))
 
 (use-package markdown-mode
-  :mode ("README\\.md\\'" . gfm-mode)
+  :mode
+  ("README\\.md\\'" . gfm-mode)
   :init
   (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
 
 (use-package nushell-mode
+  :mode "\\.nu\\'"
   :custom
   (nushell-indent-offset 2))
 
 (use-package typst-ts-mode
+  :mode "\\.typ\\'"
   :custom
   (typst-ts-mode-indent-offset 2)
   (typst-ts-mode-enable-raw-blocks-highlight t)
@@ -95,17 +103,11 @@
     :major '(typst-ts-mode)))
 
 (use-package combobulate
-  :commands (combobulate-navigate-previous
-             combobulate-navigate-next
-             combobulate-navigate-logical-previous
-             combobulate-navigate-logical-next
-             combobulate-drag-up
-             combobulate-drag-down
-             combobulate-navigate-up-list-maybe
-             combobulate-navigate-down-list-maybe))
+  :defer t)
 
 ;; eglot LSP client
 (use-package eglot
+  :defer t
   :hook
   ((haskell-mode
     c-ts-mode
@@ -175,9 +177,10 @@
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("\\`go.mod\\'" . go-mode-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.z?sh\\'" . bash-ts-mode))
-;; (add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.[cm]jsx?\\'" . jtsx-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.[cm]js\\'" . js-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jtsx-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . jtsx-tsx-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.[jt]?sx\\'" . tsx-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
