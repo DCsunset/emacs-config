@@ -6,38 +6,6 @@
 (use-package envrc
   :hook (after-init . envrc-global-mode))
 
-(use-package openwith
-  :commands (openwith-make-extension-regexp
-            openwith-mode)
-  :hook
-  (after-init . openwith-mode)
-  :config
-  (setq openwith-associations
-        `((,(openwith-make-extension-regexp
-            '("pdf" "dvi"))
-          "okular"
-          (file))
-          (,(openwith-make-extension-regexp
-             '("docx?" "xlsx?" "pptx?"
-               "odt" "ods" "odp" "odg" "odf"))
-           "libreoffice"
-           (file))
-          (,(openwith-make-extension-regexp
-             '("png" "jpe?g" "gif" "tif"))
-           "imv"
-           (file))
-          (,(openwith-make-extension-regexp
-             '("mp3" "flac" "aac" "wav"
-               "mp4" "mkv" "mpe?g" "flv" "avi" "wmv"))
-           "mpv --force-window=immediate"
-           (file))))
-  (defun openwith-large-files (orig-fn &rest args)
-    "A wrapper around `abort-if-file-too-large' to skip openwith files."
-    (let ((filename (nth 2 args)))
-      (unless (--any (string-match-p (car it) filename) openwith-associations)
-        (apply orig-fn args))))
-  (advice-add 'abort-if-file-too-large :around #'openwith-large-files))
-
 ;; make hl-line more distinguishable (for dired)
 (use-package hl-line
   :custom-face
@@ -55,6 +23,8 @@
 (use-package nerd-icons-dired
   :hook
   (dired-mode . nerd-icons-dired-mode))
+
+(use-package dired-open-with)
 
 (use-package dired-du
   :custom
@@ -118,7 +88,9 @@
                                                         (dired-sidebar-subtree-toggle))
                                                       #'dired-subtree-down)))))
     ;; TAB is also supported in `hx-toggle-visibility'
-    ("RET" . ("open" . dired-find-file))
+    (("RET" "o") . ("open" . dired-find-file))
+    ;; run ! or & to open them separately
+    ("O" . ("open (in one command)" . dired-open-marked))
     ("i" . ("toggle details" . dired-toggle-hide-details-mode))
     ("I" . ("enable dired-du-mode" . dired-du-mode))
     ("h" . ("toggle hidden files" . dired-omit-mode))
@@ -139,8 +111,6 @@
     ("C o" . ("chown" . dired-do-chown))
     ("C g" . ("chgrp" . dired-do-chgrp))
     ("C t" . ("touch" . dired-do-touch))
-    ;; run ! or & to open them separately
-    ("o" . ("open (in one command)" . dired-open-marked))
     ;; use C-s or C-a to exit wdired mode
     ("' w" . ("enable wdired mode" . dired-toggle-read-only))
     ("M-RET" . ("open (other window)" . dired-find-file-other-window))))

@@ -76,7 +76,7 @@ with epkgs; [
   popwin
 
   # dir.el
-  openwith
+  dired-open-with
   dired-du
   dired-sidebar
   nerd-icons-dired
