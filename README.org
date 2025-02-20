@@ -36,11 +36,11 @@ Using with Nix Flakes:
           devShell = {
             default = pkgs.mkShell {
               packages = [
-                inputs.emacs-dcsunset.packages.${system}.default.override {
+                (inputs.emacs-dcsunset.packages.${system}.default.override {
                   configVars = {
                     # ...
                   };
-                }
+                })
               ];
             };
           };
