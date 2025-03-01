@@ -24,7 +24,7 @@
 
 (defun gtd-file (file)
   "Get path of a FILE in gtd."
-  (concat gtd-directory file))
+  (file-name-concat gtd-directory file))
 (defun gtd-save ()
   "Save all buffers in gtd."
   (interactive)
