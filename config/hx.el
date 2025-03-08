@@ -41,65 +41,6 @@
 ;; disable the transient mark mode
 (transient-mark-mode -1)
 
-;; Reference: evil
-(defun hx--esc-filter (map)
-  "Translate \\e to [escape] for MAP if no further event arrives in terminal.
-
-This is necessary to distinguish the meta key and actual escape in terminal."
-  (if (and (let ((keys (this-single-command-keys)))
-             (and (> (length keys) 0)
-             (= (aref keys (1- (length keys))) ?\e)))
-           (sit-for 0.01))  ; wait for certain time to distinguish the actual escape
-      [escape]
-    map))  ; don't change keymap if it isn't an actual escape
-
-(defun hx--init-esc (frame)
-  "Enable escape translation in `input-decode-map' for terminal FRAME."
-  (with-selected-frame frame
-    (let ((term (frame-terminal frame)))
-      (when (and
-             (eq (terminal-live-p term) t)  ; only patch char only terminal
-             (not (terminal-parameter term 'hx-esc-map)))  ; not patched already
-        (let ((hx-esc-map (keymap-lookup input-decode-map "ESC")))
-          ; remember the old map for restoration later and prevent patching it again
-          (set-terminal-parameter term 'hx-esc-map hx-esc-map)
-          (keymap-set input-decode-map "ESC"
-                      `(menu-item "" ,hx-esc-map :filter ,#'hx--esc-filter)))))))
-
-(defun hx--deinit-esc (frame)
-  "Disable escape translation in `input-decode-map' for terminal FRAME."
-  (with-selected-frame frame
-    (let ((term (frame-terminal frame)))
-      (when (eq (terminal-live-p term) t)
-        (let ((hx-esc-map (terminal-parameter term 'hx-esc-map)))
-          (when hx-esc-map
-            (keymap-set input-decode-map "ESC" hx-esc-map)
-            (set-terminal-parameter term 'hx-esc-map nil)))))))
-
-(defvar hx-esc-mode nil
-  "Non-nil if `hx-esc-mode' is enabled.")
-
-(defun hx-esc-mode (&optional arg)
-  "Toggle translation from \\e to [escape] in terminal.
-
-Enable it when ARG is positve and disable it if negative.
-Toggle it when ARG is nil or 0."
-  (cond
-   ((or (null arg) (eq arg 0))
-    (hx-esc-mode (if hx-esc-mode -1 1)))  ; toggle
-   ((> arg 0)
-    (unless hx-esc-mode
-      (setq hx-esc-mode t)
-      (add-hook 'after-make-frame-functions #'hx--init-esc)
-      ; apply init function to existing frames
-      (mapc #'hx--init-esc (frame-list))))
-   ((< arg 0)
-    (when hx-esc-mode
-      (remove-hook 'after-make-frame-functions #'hx--deinit-esc)
-      ; apply deinit function to existing frames
-      (mapc #'hx--deinit-esc (frame-list))
-      (setq hx-esc-mode nil)))))
-
 (modaled-define-local-var hx--mark nil
   "Start pos of the selected region in hx.")
 
@@ -1381,7 +1322,4 @@ AT-POINT means to make sure point is at beg or end."
          (t "normal"))))
 
 (modaled-setup)
-
-;; translate terminal \\e to [escape]
-(hx-esc-mode 1)
 

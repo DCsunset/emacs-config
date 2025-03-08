@@ -54,6 +54,58 @@ Returns expanded dir name on success."
                     ((looking-at "\\s)")
                      (save-excursion (forward-char 1) (funcall orig-fun))))))
 
+
+;;; my-esc-mode
+
+;; Reference: evil
+(defun my-esc--filter (map)
+  "Translate \\e to [escape] for MAP if no further event arrives in terminal.
+
+This is necessary to distinguish the meta key and actual escape in terminal."
+  (if (and (let ((keys (this-single-command-keys)))
+             (and (> (length keys) 0)
+             (= (aref keys (1- (length keys))) ?\e)))
+           (sit-for 0.01))  ; wait for certain time to distinguish the actual escape
+      [escape]
+    map))  ; don't change keymap if it isn't an actual escape
+
+(defun my-esc--init (frame)
+  "Enable escape translation in `input-decode-map' for terminal FRAME."
+  (with-selected-frame frame
+    (let ((term (frame-terminal frame)))
+      (when (and
+             (eq (terminal-live-p term) t)  ; only patch char only terminal
+             (not (terminal-parameter term 'my-esc-map))  ; not patched already
+             (not (kkp--this-terminal-supports-kkp-p)))  ; it conflicts with kkp
+        (let ((my-esc-map (keymap-lookup input-decode-map "ESC")))
+          ; remember the old map for restoration later and prevent patching it again
+          (set-terminal-parameter term 'my-esc-map my-esc-map)
+          (keymap-set input-decode-map "ESC"
+                      `(menu-item "" ,my-esc-map :filter ,#'my-esc--filter)))))))
+
+(defun my-esc--deinit (frame)
+  "Disable escape translation in `input-decode-map' for terminal FRAME."
+  (with-selected-frame frame
+    (let ((term (frame-terminal frame)))
+      (when (eq (terminal-live-p term) t)
+        (let ((my-esc-map (terminal-parameter term 'my-esc-map)))
+          (when my-esc-map
+            (keymap-set input-decode-map "ESC" my-esc-map)
+            (set-terminal-parameter term 'my-esc-map nil)))))))
+
+(define-minor-mode my-esc-mode
+  "Enable translation from `\\e' to `[escape]' in terminal."
+  :global t
+  (if (and my-esc-mode)
+      (progn
+        (add-hook 'after-make-frame-functions #'my-esc--init)
+        ;; apply init function to existing frames
+        (mapc #'my-esc--init (frame-list)))
+    (remove-hook 'after-make-frame-functions #'my-esc--deinit)
+    ;; apply deinit function to existing frames
+    (mapc #'my-esc--deinit (frame-list))))
+
+
 ;;; packages
 
 ;; don't use eval-when-compile to avoid bind-key errors
@@ -67,7 +119,9 @@ Returns expanded dir name on success."
 
 (use-package kkp
   :hook
+  (after-init . my-esc-mode)
   (after-init . global-kkp-mode))
+
 
 ;; faster loading for large files by chunks
 (use-package vlf-setup
