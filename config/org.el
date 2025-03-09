@@ -167,6 +167,7 @@ LOC can be `current' or `other'."
   :bind
   `(("M-RET" . ("org open (other window)" . ,(hx :eval (org-open 'other))))
     ("RET" . ("org open" . ,(hx :eval (org-open 'current))))
+    ("C-RET" . ("org open (external)" . browse-url-at-point))
     ("' w" . ("org edit" . org-edit-special))
     ("' e" . ("org export" . org-export-dispatch))
     ("' i" . ("org insert" . (keymap)))
