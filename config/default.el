@@ -231,6 +231,7 @@
     ("r" . ("refresh" . magit-refresh))
     ("R" . ("rebase" . magit-rebase))
     ("c" . ("commit" . magit-commit))
+    ("c" . ("checkout" . magit-checkout))
     ("' l" . ("log" . magit-log))
     ("' a" . ("apply" . magit-apply))))
 (modaled-enable-substate-on-state-change
