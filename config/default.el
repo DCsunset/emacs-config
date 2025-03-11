@@ -230,7 +230,9 @@
     ("D" . ("discard" . magit-discard))
     ("r" . ("refresh" . magit-refresh))
     ("R" . ("rebase" . magit-rebase))
-    ("c" . ("commit" . magit-commit))))
+    ("c" . ("commit" . magit-commit))
+    ("' l" . ("log" . magit-log))
+    ("' a" . ("apply" . magit-apply))))
 (modaled-enable-substate-on-state-change
   "magit-status"
   :states '("normal" "select")
