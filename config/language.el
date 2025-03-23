@@ -81,10 +81,8 @@
   :init
   (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
 
-(use-package nushell-mode
-  :mode "\\.nu\\'"
-  :custom
-  (nushell-indent-offset 2))
+(use-package nushell-ts-mode
+  :mode "\\.nu\\'")
 
 (use-package typst-ts-mode
   :mode "\\.typ\\'"
@@ -122,6 +120,7 @@
     jtsx-jsx-mode
     jtsx-tsx-mode
     bash-ts-mode
+    nushell-ts-mode
     css-ts-mode
     json-ts-mode
     toml-ts-mode

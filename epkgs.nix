@@ -33,7 +33,7 @@ with epkgs; [
   beancount
   nix-mode
   markdown-mode
-  nushell-mode
+  nushell-ts-mode
   haskell-mode
   caddyfile-mode
   lua-mode
@@ -51,6 +51,7 @@ with epkgs; [
     tree-sitter-dockerfile
     tree-sitter-python
     tree-sitter-bash
+    tree-sitter-nu
     tree-sitter-c
     tree-sitter-cpp
     tree-sitter-go
