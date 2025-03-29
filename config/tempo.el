@@ -16,6 +16,7 @@
 
 (use-package tempo
   :defer t
+  :commands (tempo-complete-tag)
   :config
   (setq tempo-interactive t)
   (setq tempo-user-elements
