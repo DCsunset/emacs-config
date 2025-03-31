@@ -144,6 +144,7 @@ CMD1 for \\`mouse-1' and CMD3 for \\`mouse-3'."
                      (t 'shadow)))
          (help-echo (cond (last-error (format "Eglot error: %s" last-error))
                           (name (format "Eglot connected: %s" name))
+                          (server "Eglot connected")
                           (t "Eglot disconnected"))))
     (setq my-modeline-eglot
           (propertize (surround-spaces (nerd-icons-octicon "nf-oct-rocket"))
