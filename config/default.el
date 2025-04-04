@@ -235,7 +235,7 @@
     ("' l" . ("log" . magit-log))
     ("' a" . ("apply" . magit-apply))))
 (modaled-enable-substate-on-state-change
-  "magit-status"
+  "magit"
   :states '("normal" "select")
   :major '(magit-status-mode magit-log-mode))
 
