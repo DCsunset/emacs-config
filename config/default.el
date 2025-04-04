@@ -214,10 +214,10 @@
   :config
   (magit-todos-mode 1))
 
-;; magit-status-mode specific keybindings
-(modaled-define-substate "magit-status")
+;; magit specific keybindings
+(modaled-define-substate "magit")
 (modaled-define-keys
-  :substates '("magit-status")
+  :substates '("magit")
   :bind
   `(("a" . ("stage" . magit-stage))
     ("A" . ("stage all" . magit-stage-modified))
@@ -237,7 +237,7 @@
 (modaled-enable-substate-on-state-change
   "magit-status"
   :states '("normal" "select")
-  :major '(magit-status-mode))
+  :major '(magit-status-mode magit-log-mode))
 
 
 ;;; vterm (insert as default state)
