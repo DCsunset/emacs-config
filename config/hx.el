@@ -534,7 +534,9 @@ The following options are available:
 Set mark when MARKING is t."
   (when marking
     (hx-set-mark (point)))
-  (let ((search-fn (if (> direction 0) #'search-forward #'search-backward))
+  ;; case sensitive
+  (let ((case-fold-search nil)
+        (search-fn (if (> direction 0) #'search-forward #'search-backward))
         (search-pos (- (point) offset)))
     (when (within-range search-pos (cons (point-min) (point-max)))
       (forward-char (- offset))
