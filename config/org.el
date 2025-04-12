@@ -95,7 +95,7 @@
            "* TODO %i%?")
           ("j" "journal" entry
            (file ,(journal-file "main.org"))
-           "* %<%F %a>\n\n%i%?"
+           "* %<%FT%T%z>\n\n%i%?"
            :empty-lines 1)))
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "DOING(D)" "PLANNED(p)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-todo-keyword-faces
