@@ -95,7 +95,8 @@
            "* TODO %i%?")
           ("j" "journal" entry
            (file ,(journal-file "main.org"))
-           "* %u\n\n%i%?\n")))
+           "* %<%F %a>\n\n%i%?"
+           :empty-lines 1)))
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "DOING(D)" "PLANNED(p)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-todo-keyword-faces
         '(("SOMEDAY" . "light sky blue")
@@ -207,7 +208,7 @@ LOC can be `current' or `other'."
   :bind
   `(("r" . ("rebuild agenda view" . org-agenda-redo))
     ("' t" . ("agenda todo" . ,(hx :region :eval org-agenda-todo gtd-save)))
-    ("' n" . ("agenda new gtd" . ,(hx :eval (org-capture nil "ti"))))
+    ("' n" . ("agenda new gtd" . ,(hx :eval (org-capture nil "t"))))
     ("' p" . ("agenda priority" . ,(hx :region :eval org-agenda-priority gtd-save)))
     ("' r" . ("agenda refile" . ,(hx :region :eval org-agenda-refile gtd-save)))
     ("' i" . ("agenda insert" . (keymap)))
@@ -319,14 +320,17 @@ LOC can be `current' or `other'."
     ("SPC n i d b" . ("backlink dblock" . denote-org-extras-dblock-insert-backlinks))
     ("SPC n i d f" . ("file dblock" . denote-org-extras-dblock-insert-files))
     ("SPC n r" . ("note rename" . denote-rename-file))
+    ;; org capture
+    ("SPC o c" . ("org capture" . org-capture))
     ;; org present
     ("SPC o p" . ("org present" . ,(hx :eval (if (bound-and-true-p org-present-mode)
                                                  (org-present-quit)
                                                (org-present)))))
-    ;; gtd (todo)
+    ;; gtd (todo list)
     ("SPC o t" . ("gtd" . (keymap)))
     ("SPC o t l" . ("gtd list" . org-todo-list))
     ("SPC o t i" . ("gtd inbox" . ,(hx :eval (find-file (gtd-file "inbox.org")))))
     ("SPC o t a" . ("gtd actions" . ,(hx :eval (find-file (gtd-file "actions.org")))))
-    ("SPC o t n" . ("gtd new" . ,(hx :eval (org-capture nil "ti"))))))
+    ;; journal
+    ("SPC o j" . ("journal" . ,(hx :eval (find-file (journal-file "main.org")))))))
 
