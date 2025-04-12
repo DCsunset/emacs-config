@@ -1015,7 +1015,7 @@ AT-POINT means to make sure point is at beg or end."
     (">" . ("indent" . ,(hx :re-hl :eval (hx-extended-region-apply #'indent-rigidly 2))))
     ("<" . ("unindent" . ,(hx :re-hl :eval (hx-extended-region-apply #'indent-rigidly -2))))
     ("=" . ("format" . ,(hx :re-hl :eval (hx-extended-region-apply #'indent-region))))
-    ("C-c" . ("comment/uncomment" . ,(hx :re-hl :eval (hx-extended-region-apply #'comment-or-uncomment-region))))
+    ("C-/" . ("comment/uncomment" . ,(hx :re-hl :eval (hx-extended-region-apply #'comment-or-uncomment-region))))
     ;; selection
     ("x" . ("extend line below" . ,(hx :re-hl :eval hx-extend-line-below)))
     ("X" . ("extend line" . ,(hx :re-hl :eval hx-extend-to-line-bounds)))
@@ -1187,12 +1187,6 @@ AT-POINT means to make sure point is at beg or end."
 
     ;;; apps
     ("SPC SPC" . ("apps" . (keymap)))
-    ;; gtd
-    ("SPC SPC t" . ("gtd" . (keymap)))
-    ("SPC SPC t l" . ("gtd list" . org-todo-list))
-    ("SPC SPC t i" . ("gtd inbox" . ,(hx :eval (find-file (gtd-file "inbox.org")))))
-    ("SPC SPC t a" . ("gtd actions" . ,(hx :eval (find-file (gtd-file "actions.org")))))
-    ("SPC SPC t n" . ("gtd new" . ,(hx :eval (org-capture nil "ti"))))
     ;; IRC (ERC)
     ("SPC SPC i" . ("irc" . ,(hx :eval
                                  (erc-tls :server "@IRC_SERVER@"
@@ -1278,7 +1272,7 @@ AT-POINT means to make sure point is at beg or end."
     ("C-k" . ("next tab group" . centaur-tabs-forward-group))
     ("C-s" . ("save" . hx-save))
     ("C-M-s" . ("save all" . ,(hx :eval (save-some-buffers t))))
-    ("C-a" . ("abort" . hx-abort))
+    ("C-c" . ("abort" . hx-abort))
     ("C-q" . ("quit" . ,(hx :eval (if (length= (frame-list) 1)
                                       (save-buffers-kill-terminal)
                                     (let ((global-buffers (beframe--global-buffers)))
