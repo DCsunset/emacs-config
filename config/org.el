@@ -23,13 +23,20 @@
 (defvar gtd-directory (ensure-dir "@GTD_DIR@"))
 
 (defun gtd-file (file)
-  "Get path of a FILE in gtd."
+  "Get path of a FILE in gtd dir."
   (file-name-concat gtd-directory file))
 (defun gtd-save ()
   "Save all buffers in gtd."
   (interactive)
   (save-some-buffers t (lambda ()
                          (file-in-directory-p buffer-file-name gtd-directory))))
+
+;; journal
+(defvar journal-directory (ensure-dir "@JOURNAL_DIR@"))
+
+(defun journal-file (file)
+  "Get path of a FILE in journal dir."
+  (file-name-concat journal-directory file))
 
 ;; org-mode
 (use-package org
@@ -82,14 +89,13 @@
      (haskell . t)
      (python . t)))
 
-  ;; GTD in org-mode
   (setq org-capture-templates
-        `(("ti" "gtd inbox" entry
+        `(("t" "gtd inbox" entry
            (file ,(gtd-file "inbox.org"))
            "* TODO %i%?")
-          ("ta" "gtd archives" entry
-           (file ,(gtd-file "archives.org"))
-           "* DONE %i%?")))
+          ("j" "journal" entry
+           (file ,(journal-file "main.org"))
+           "* %u\n\n%i%?\n")))
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "DOING(D)" "PLANNED(p)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-todo-keyword-faces
         '(("SOMEDAY" . "light sky blue")
@@ -316,5 +322,11 @@ LOC can be `current' or `other'."
     ;; org present
     ("SPC o p" . ("org present" . ,(hx :eval (if (bound-and-true-p org-present-mode)
                                                  (org-present-quit)
-                                               (org-present)))))))
+                                               (org-present)))))
+    ;; gtd (todo)
+    ("SPC o t" . ("gtd" . (keymap)))
+    ("SPC o t l" . ("gtd list" . org-todo-list))
+    ("SPC o t i" . ("gtd inbox" . ,(hx :eval (find-file (gtd-file "inbox.org")))))
+    ("SPC o t a" . ("gtd actions" . ,(hx :eval (find-file (gtd-file "actions.org")))))
+    ("SPC o t n" . ("gtd new" . ,(hx :eval (org-capture nil "ti"))))))
 

@@ -9,8 +9,8 @@
 
   # Vars for substitution in config
   # Supported vars:
-  #   LUA_LS_CONIFG GTD_DIR NOTES_DIR OLLAMA_HOST
-  #   IRC_SERVER IRC_NICK IRC_USER IRC_PASS_FILE
+  #   LUA_LS_CONIFG GTD_DIR NOTES_DIR JOURNAL_DIR
+  #   OLLAMA_HOST IRC_SERVER IRC_NICK IRC_USER IRC_PASS_FILE
   configVars ? {}
 }:
 

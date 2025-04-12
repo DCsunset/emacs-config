@@ -52,16 +52,17 @@ Using with Nix Flakes:
 
 ** Supported Config Vars
 
-| Name          | Description                | Default                                     |
-|---------------+----------------------------+---------------------------------------------|
+| Name          | Description                | Default                            |
+|---------------+----------------------------+------------------------------------|
 | LUA_LS_CONFIG | lua-language-server config | See =config/lsp/lua-ls-config.lua= |
-| GTD_DIR       | dir for GTD items          | -                                           |
-| NOTES_DIR     | dir for notes              | -                                           |
-| OLLAMA_HOST   | Ollama host                | -                                           |
-| IRC_SERVER    | IRC server                 | -                                           |
-| IRC_USER      | IRC user                   | -                                           |
-| IRC_NICK      | IRC nickname               | -                                           |
-| IRC_PASS_FILE | File storing IRC password  | -                                           |
+| GTD_DIR       | dir for GTD items          | -                                  |
+| NOTES_DIR     | dir for notes              | -                                  |
+| JOURNAL_DIR   | dir for journal | -                          |
+| OLLAMA_HOST   | Ollama host                | -                                  |
+| IRC_SERVER    | IRC server                 | -                                  |
+| IRC_USER      | IRC user                   | -                                  |
+| IRC_NICK      | IRC nickname               | -                                  |
+| IRC_PASS_FILE | File storing IRC password  | -                                  |
 
 
 ** License
