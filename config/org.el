@@ -18,6 +18,15 @@
   :hook
   (org-mode . valign-mode))
 
+(use-package org-appear
+  :defer t
+  :hook
+  (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-autoentities t))
+
 ;;; gtd
 
 (defvar gtd-directory (ensure-dir "@GTD_DIR@"))
@@ -58,6 +67,8 @@
   (org-babel-python-mode 'python-ts-mode)
   ;; don't truncate lines (wrap lines instead)
   (org-startup-truncated nil)
+  (org-hide-emphasis-markers t)
+  (org-pretty-entities t)
   :custom-face
   (org-headline-todo ((t (:foreground "#66acda"))))
   (org-headline-done ((t (:foreground "dark gray"))))
@@ -245,7 +256,6 @@ LOC can be `current' or `other'."
   (consult-denote-find-command #'consult-fd)
   (consult-denote-grep-command #'consult-ripgrep))
 
-
 ;;; org-present
 
 (defun my/org-present-start ()
@@ -255,7 +265,6 @@ LOC can be `current' or `other'."
   (visual-fill-column-mode 1)
   (display-line-numbers-mode -1)
   (org-display-inline-images)
-  (setq-local org-hide-emphasis-markers t)
   ;; Set a blank header line string to create blank space at the top
   (setq-local header-line-format " ")
   ;; Tweak font sizes
@@ -275,7 +284,6 @@ LOC can be `current' or `other'."
   (visual-fill-column-mode -1)
   (display-line-numbers-mode 1)
   (org-remove-inline-images)
-  (setq-local org-hide-emphasis-markers nil)
   ;; Clear the header line format by setting to `nil'
   (setq-local header-line-format nil)
   ;; Reset font

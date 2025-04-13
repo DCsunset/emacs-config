@@ -18,6 +18,7 @@ with epkgs; [
   org
   org-super-agenda
   org-present
+  org-appear
   denote
   consult-denote
   valign
