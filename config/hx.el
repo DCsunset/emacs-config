@@ -963,9 +963,10 @@ AT-POINT means to make sure point is at beg or end."
     ("L" . ("up (text)" . ,(hx :let (line-move-visual nil) :re-sel :eval previous-line)))
     ("K" . ("down (text)" . ,(hx :let (line-move-visual nil) :re-sel :eval next-line)))
     ("C-u" . ("up 10x (visual)" . ,(hx :arg-desc "p" :re-sel :eval
-                                     (funcall-interactively #'previous-line (* (car l-args) 10)))))
+                                       (funcall-interactively #'previous-line (* (car l-args) 10)))))
     ("C-d" . ("down 10x (visual)" . ,(hx :arg-desc "p" :re-sel :eval
-                                       (funcall-interactively #'next-line (* (car l-args) 10)))))
+                                         (funcall-interactively #'next-line (* (car l-args) 10)))))
+    ("C-w" . undefined)
     ("w" . ("next word" . ,(hx :re-hl :eval (hx-next-word (equal modaled-state "normal")))))
     ("b" . ("prev word" . ,(hx :re-hl :eval (hx-previous-word (equal modaled-state "normal")))))
     ("f" . ("find next char" . ,(hx :rec m :arg (c "Find: ") :re-hl :eval (hx-find-char arg +1 -1 (equal modaled-state "normal")))))
