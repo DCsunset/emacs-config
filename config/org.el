@@ -196,16 +196,33 @@ LOC can be `current' or `other'."
     ("' i t" . ("org insert tag" . org-set-tags-command))
     ("' l" . ("org toggle link display" . org-toggle-link-display))
     ("' c" . ("org capture" . org-capture))
+    ("' t" . ("org todo" . org-todo))
     ("' <" . ("org promote" . ,(hx :region :eval org-do-promote)))
     ("' >" . ("org demote" . ,(hx :region :eval org-do-demote)))
     ("' J" . ("org promote subtree" . ,(hx :region :eval org-promote-subtree)))
     ("' :" . ("org demote subtree" . ,(hx :region :eval org-demote-subtree)))
     ("' L" . ("org promote subtree" . ,(hx :region :eval org-move-subtree-up)))
     ("' K" . ("org demote subtree" . ,(hx :region :eval org-move-subtree-down)))
-    ;; org-gtd
-    ("' t" . ("org todo" . ,(hx :region :eval org-todo gtd-save)))
-    ("' r" . ("org refile" . ,(hx :region :eval org-refile gtd-save)))
-    ("' p" . ("org priority" . ,(hx :region :eval org-priority gtd-save)))))
+
+    ;; gtd
+    ("' g" . ("gtd" . (keymap)))
+    ("' g r" . ("gtd refile" . ,(hx :region :eval org-refile gtd-save)))
+    ("' g p" . ("gtd priority" . ,(hx :region :eval org-priority gtd-save)))
+
+    ;; denote
+    ("' n" . ("denote" . (keymap)))
+    ("' n n" . ("denote new" . denote))
+    ("' n f" . ("denote find" . consult-denote-find))
+    ("' n l" . ("denote links" . denote-find-link))
+    ("' n b" . ("denote backlinks" . denote-find-backlink))
+    ("' n s" . ("denote search" . consult-denote-grep))
+    ("' n r" . ("denote rename" . denote-rename-file))
+    ("' n i" . ("denote insert" . (keymap)))
+    ("' n i l" . ("denote insert link" . denote-link))
+    ("' n i d" . ("denote insert org dblock" . (keymap)))
+    ("' n i d l" . ("denote link dblock" . denote-org-extras-dblock-insert-links))
+    ("' n i d b" . ("denote backlink dblock" . denote-org-extras-dblock-insert-backlinks))
+    ("' n i d f" . ("denote file dblock" . denote-org-extras-dblock-insert-files))))
 ;; enable org substate only for org-mode & not insert state
 (modaled-enable-substate-on-state-change
   "org"
@@ -314,31 +331,21 @@ LOC can be `current' or `other'."
 (modaled-define-keys
   :states '("normal" "select" "major")
   :bind
-  `(("SPC n" . ("notes" . (keymap)))
-    ("SPC n n" . ("note new" . denote))
-    ("SPC n f" . ("note find" . (keymap)))
-    ("SPC n f a" . ("find all" . consult-denote-find))
-    ("SPC n f l" . ("find links" . denote-find-link))
-    ("SPC n f b" . ("find links" . denote-find-backlink))
-    ("SPC n s" . ("note search" . consult-denote-grep))
-    ("SPC n i" . ("note insert" . (keymap)))
-    ("SPC n i l" . ("insert link" . denote-link))
-    ("SPC n i d" . ("insert org dblock" . (keymap)))
-    ("SPC n i d l" . ("link dblock" . denote-org-extras-dblock-insert-links))
-    ("SPC n i d b" . ("backlink dblock" . denote-org-extras-dblock-insert-backlinks))
-    ("SPC n i d f" . ("file dblock" . denote-org-extras-dblock-insert-files))
-    ("SPC n r" . ("note rename" . denote-rename-file))
-    ;; org capture
+  `(;; org capture
     ("SPC o c" . ("org capture" . org-capture))
     ;; org present
     ("SPC o p" . ("org present" . ,(hx :eval (if (bound-and-true-p org-present-mode)
                                                  (org-present-quit)
                                                (org-present)))))
     ;; gtd (todo list)
-    ("SPC o t" . ("gtd" . (keymap)))
-    ("SPC o t l" . ("gtd list" . org-todo-list))
-    ("SPC o t i" . ("gtd inbox" . ,(hx :eval (find-file (gtd-file "inbox.org")))))
-    ("SPC o t a" . ("gtd actions" . ,(hx :eval (find-file (gtd-file "actions.org")))))
+    ("SPC o g" . ("gtd" . (keymap)))
+    ("SPC o g l" . ("gtd list" . org-todo-list))
+    ("SPC o g i" . ("gtd inbox" . ,(hx :eval (find-file (gtd-file "inbox.org")))))
+    ("SPC o g a" . ("gtd actions" . ,(hx :eval (find-file (gtd-file "actions.org")))))
+    ;; denote
+    ("SPC o n" . ("denote" . (keymap)))
+    ("SPC o n n" . ("denote new" . denote))
+    ("SPC o n f" . ("denote find" . consult-denote-find))
     ;; journal
     ("SPC o j" . ("journal" . ,(hx :eval (find-file (journal-file "main.org")))))))
 
