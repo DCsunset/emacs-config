@@ -1122,6 +1122,8 @@ AT-POINT means to make sure point is at beg or end."
                                                    (setq buffer-read-only (not buffer-read-only)))))
     ("SPC f" . ("frame" . (keymap)))
     ("SPC f RET" . ("run in new frame" . other-frame-prefix))
+    ("SPC r" . ("Query replace" . ,(hx :region :eval query-replace)))
+    ("SPC R" . ("Query replace regexp" . ,(hx :region :eval query-replace-regexp)))
     ("SPC ?" . ("search symbol" . apropos))
     ("SPC k" . ("show eldoc" . hx-show-eldoc))
     ("SPC u" . ("undo tree" . vundo))
