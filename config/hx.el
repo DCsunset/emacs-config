@@ -77,12 +77,14 @@
                 (mc/create-fake-cursor-at-point))))))))
 
 (defun hx-toggle-cursor ()
-  "Toggle a cursor at point."
+  "Toggle a cursor at point.
+Returns t if it adds a new cursor."
   (interactive)
   (let ((cursor (mc/fake-cursor-at-point)))
     (if cursor
         (mc/remove-fake-cursor cursor)
-      (mc/create-fake-cursor-at-point))))
+      (mc/create-fake-cursor-at-point))
+    (not cursor)))
 
 (defun hx-add-cursor ()
   "Add a cursor at point if doesn't exist."
@@ -1023,7 +1025,7 @@ AT-POINT means to make sure point is at beg or end."
     ("e" . ("extend one char" . ,(hx :re-hl :eval hx-extend-char)))
     ("E" . ("shrink one char" . ,(hx :re-hl :eval hx-shrink-char)))
     ;; multiple cursors
-    ("C" . ("toggle cursor and next line" . ,(hx :let (line-move-visual nil) :eval hx-toggle-cursor next-line)))
+    ("C" . ("toggle cursor and next line" . ,(hx :let (line-move-visual nil) :eval (when (hx-toggle-cursor) (next-line)))))
     ("M-C" . ("remove all cursors" . hx-remove-cursors))
     ("M-c" . ("toggle multiple-cursors-mode" . hx-toggle-multiple-cursors))
     ("M-<mouse-1>" . ("toggle cursor on click" . hx-toggle-cursor-on-click))
