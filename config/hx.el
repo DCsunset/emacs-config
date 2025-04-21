@@ -207,7 +207,7 @@ Should be called only before entering multiple-cursors-mode."
     (let ((texts '()))
       ;; must use it after use-package multiple-cursors
       (hx-for-each-cursor-region
-       (push (hx-region-apply #'buffer-substring) texts))
+       (push (hx-region-apply #'buffer-substring-no-properties) texts))
       (string-join (nreverse texts) "\n"))))
 
 (defun hx-copy ()
