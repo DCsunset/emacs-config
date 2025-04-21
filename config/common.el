@@ -76,7 +76,8 @@ This is necessary to distinguish the meta key and actual escape in terminal."
       (when (and
              (eq (terminal-live-p term) t)  ; only patch char only terminal
              (not (terminal-parameter term 'my-esc-map))  ; not patched already
-             (not (kkp--this-terminal-supports-kkp-p)))  ; it conflicts with kkp
+             (or (not (kkp--this-terminal-supports-kkp-p))  ; it conflicts with kkp
+                 (daemonp)))  ; HACK: kkp doesn't work for daemon
         (let ((my-esc-map (keymap-lookup input-decode-map "ESC")))
           ; remember the old map for restoration later and prevent patching it again
           (set-terminal-parameter term 'my-esc-map my-esc-map)
