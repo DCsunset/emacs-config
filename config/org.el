@@ -197,6 +197,7 @@ LOC can be `current' or `other'."
     ("' l" . ("org toggle link display" . org-toggle-link-display))
     ("' c" . ("org capture" . org-capture))
     ("' t" . ("org todo" . org-todo))
+    ("' p" . ("org priority" . org-priority))
     ("' <" . ("org promote" . ,(hx :region :eval org-do-promote)))
     ("' >" . ("org demote" . ,(hx :region :eval org-do-demote)))
     ("' J" . ("org promote subtree" . ,(hx :region :eval org-promote-subtree)))
@@ -207,7 +208,6 @@ LOC can be `current' or `other'."
     ;; gtd
     ("' g" . ("gtd" . (keymap)))
     ("' g r" . ("gtd refile" . ,(hx :region :eval org-refile gtd-save)))
-    ("' g p" . ("gtd priority" . ,(hx :region :eval org-priority gtd-save)))
 
     ;; denote
     ("' n" . ("denote" . (keymap)))
