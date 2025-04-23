@@ -1,6 +1,7 @@
 ;;; Tempo template definitions
 
 (use-package uuidgen
+  :commands (uuidgen-4)
   :defer t)
 
 (defun my-template-handler (arg)
