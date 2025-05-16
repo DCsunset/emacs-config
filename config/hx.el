@@ -1112,6 +1112,7 @@ AT-POINT means to make sure point is at beg or end."
     ("SPC d" . ("dired" . (keymap)))
     ("SPC d f" . ("find file in dir" . find-file))
     ("SPC d F" . ("find file in dir (recursive)" . consult-fd))
+    ("SPC d r" . ("find recent file" . consult-recent-file))
     ("SPC d s" . ("search in dir" . consult-ripgrep))
     ("SPC d t" . ("dired tree" . dired-sidebar-toggle-sidebar))
     ("SPC d n" . ("new file/dir" . (keymap)))
@@ -1135,6 +1136,7 @@ AT-POINT means to make sure point is at beg or end."
     ("SPC j" . ("jump list" . (keymap)))
     ("SPC j g" . ("go to (jump list)" . hx-jump-goto))
     ("SPC j c" . ("clear jump list" . hx-jump-clear))
+    ("SPC e" . ("error" . (keymap)))
     ("SPC e p" . ("prev error" . ,(hx :rec m
                                   :let (types (pcase hx-arg
                                                 ('f1 '(:error))
