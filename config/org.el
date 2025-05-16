@@ -196,8 +196,8 @@ LOC can be `current' or `other'."
     ("' i t" . ("org insert tag" . org-set-tags-command))
     ("' l" . ("org toggle link display" . org-toggle-link-display))
     ("' c" . ("org capture" . org-capture))
-    ("' t" . ("org todo" . org-todo))
-    ("' p" . ("org priority" . org-priority))
+    ("' t" . ("org todo" . ,(hx :region :eval org-todo)))
+    ("' p" . ("org priority" . ,(hx :region :eval org-priority)))
     ("' <" . ("org promote" . ,(hx :region :eval org-do-promote)))
     ("' >" . ("org demote" . ,(hx :region :eval org-do-demote)))
     ("' J" . ("org promote subtree" . ,(hx :region :eval org-promote-subtree)))
@@ -331,7 +331,8 @@ LOC can be `current' or `other'."
 (modaled-define-keys
   :states '("normal" "select" "major")
   :bind
-  `(;; org capture
+  `(("SPC o" . ("org" . (keymap)))
+    ;; org capture
     ("SPC o c" . ("org capture" . org-capture))
     ;; org present
     ("SPC o p" . ("org present" . ,(hx :eval (if (bound-and-true-p org-present-mode)
