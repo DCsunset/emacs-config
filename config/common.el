@@ -19,6 +19,17 @@ Returns expanded dir name on success."
       dir-path)))
 
 
+;;; font
+
+;; Set default font and size for GUI
+(when (display-graphic-p)
+  (set-frame-font "Monospace 12" nil t)
+  (set-fontset-font t 'han "Noto Sans CJK SC")
+  (set-fontset-font t 'han "Noto Sans CJK TC" nil 'append)
+  (set-fontset-font t 'kana "Noto Sans CJK JP")
+  (set-fontset-font t 'hangul "Noto Sans CJK KR")
+  (set-fontset-font t 'cjk-misc "Noto Sans CJK SC"))
+
 ;;; UI config
 
 (when (display-graphic-p)

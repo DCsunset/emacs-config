@@ -12,9 +12,6 @@
   :custom
   (default-text-scale-amount 10))
 
-;; Set default font size for GUI
-(set-frame-font "Monospace 12" nil t)
-
 (use-package transient
   :bind
   (:map transient-map
