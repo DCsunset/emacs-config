@@ -20,6 +20,7 @@ with epkgs; [
   org-present
   org-appear
   denote
+  denote-org
   consult-denote
   valign
   extraEpkgs.org-moderncv

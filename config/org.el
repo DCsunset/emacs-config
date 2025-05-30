@@ -191,9 +191,16 @@ LOC can be `current' or `other'."
     ("' i T" . ("org insert template" . ,(hx :eval
                                              (modaled-set-state "insert")
                                              org-insert-structure-template)))
-    ("' i i" . ("org insert id" . org-id-get-create))
-    ("' i c" . ("org insert category" . org-insert-category))
-    ("' i t" . ("org insert tag" . org-set-tags-command))
+    ("' i i" . ("insert id" . org-id-get-create))
+    ("' i c" . ("insert category" . org-insert-category))
+    ("' i t" . ("insert tag" . org-set-tags-command))
+    ("' i l" . ("insert denote link" . denote-link))
+    ("' i d" . ("insert dblock" . (keymap)))
+    ("' i d l" . ("denote link dblock" . denote-org-dblock-insert-links))
+    ("' i d b" . ("denote backlink dblock" . denote-org-dblock-insert-backlinks))
+    ("' i d f" . ("denote file dblock" . denote-org-dblock-insert-files))
+    ("' d" . ("org dblock" . (keymap)))
+    ("' d u" . ("org dblock update" . org-dblock-update))
     ("' l" . ("org toggle link display" . org-toggle-link-display))
     ("' c" . ("org capture" . org-capture))
     ("' t" . ("org todo" . ,(hx :region :eval org-todo)))
@@ -216,13 +223,7 @@ LOC can be `current' or `other'."
     ("' n l" . ("denote links" . denote-find-link))
     ("' n b" . ("denote backlinks" . denote-find-backlink))
     ("' n s" . ("denote search" . consult-denote-grep))
-    ("' n r" . ("denote rename" . denote-rename-file))
-    ("' n i" . ("denote insert" . (keymap)))
-    ("' n i l" . ("denote insert link" . denote-link))
-    ("' n i d" . ("denote insert org dblock" . (keymap)))
-    ("' n i d l" . ("denote link dblock" . denote-org-extras-dblock-insert-links))
-    ("' n i d b" . ("denote backlink dblock" . denote-org-extras-dblock-insert-backlinks))
-    ("' n i d f" . ("denote file dblock" . denote-org-extras-dblock-insert-files))))
+    ("' n r" . ("denote rename" . denote-rename-file))))
 ;; enable org substate only for org-mode & not insert state
 (modaled-enable-substate-on-state-change
   "org"
@@ -265,6 +266,9 @@ LOC can be `current' or `other'."
   (denote-date-format "%FT%T%z")
   :custom-face
   (denote-faces-link ((t :foreground "turquoise" :underline t))))
+
+(use-package denote-org
+  :defer t)
 
 ;; for searching
 (use-package consult-denote
