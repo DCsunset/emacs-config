@@ -219,6 +219,7 @@ LOC can be `current' or `other'."
     ;; denote
     ("' n" . ("denote" . (keymap)))
     ("' n n" . ("denote new" . denote))
+    ("' n v" . ("denote visualise" . denote-explore-network))
     ("' n f" . ("denote find" . consult-denote-find))
     ("' n l" . ("denote links" . denote-find-link))
     ("' n b" . ("denote backlinks" . denote-find-backlink))
@@ -269,6 +270,12 @@ LOC can be `current' or `other'."
 
 (use-package denote-org
   :defer t)
+
+(use-package denote-explore
+  :defer t
+  :custom
+  (denote-explore-network-format 'd3.js)
+  (denote-explore-network-d3-js "@D3_JS@"))
 
 ;; for searching
 (use-package consult-denote

@@ -79,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748458101,
-        "narHash": "sha256-87Z1d7yKBzqvzwL37Sg6Q28YPv6/tfTzTkEgBZdaGxg=",
+        "lastModified": 1748643138,
+        "narHash": "sha256-GxKbkfDBfF6wBBGIn4POL3UcLc8Wi+MQ2zN+Or2r4hE=",
         "owner": "DCsunset",
         "repo": "nur-packages",
-        "rev": "3475072c96e1def3c2710bcd908285f480e75682",
+        "rev": "efda019cadff7a36e68d9ac646e4f159d39e14f9",
         "type": "github"
       },
       "original": {

@@ -22,6 +22,7 @@ with epkgs; [
   denote
   denote-org
   consult-denote
+  denote-explore
   valign
   extraEpkgs.org-moderncv
 

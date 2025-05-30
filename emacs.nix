@@ -1,9 +1,10 @@
 {
-  dc-lib,
   emacsPackagesFor,
   emacs,
   writeText,
 
+  nur-dcsunset,
+  dc-lib,
   # Extra emacs packages
   extraEpkgs,
 
@@ -26,6 +27,7 @@ let
         (dc-lib.substituteVars
           ({
             LUA_LS_CONIFG = "${./config/lsp}/lua-ls-config.lua";
+            D3_JS = "file://${nur-dcsunset.d3}/dist/d3.min.js";
           } // configVars)
           (dc-lib.readFiles [
             ./config/common.el
