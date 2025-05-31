@@ -64,6 +64,9 @@
                                  (,electric-pair-inhibit-predicate c))))))
   (org-capture-mode . modaled-set-insert-state)
   :custom
+  ;; use curly braces for sub/super script only so that underscore works normally
+  (org-use-sub-superscripts '{})
+  (org-export-with-sub-superscripts '{})
   (org-babel-python-mode 'python-ts-mode)
   ;; don't truncate lines (wrap lines instead)
   (org-startup-truncated nil)
