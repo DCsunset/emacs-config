@@ -91,6 +91,7 @@ with epkgs; [
 
   # ai.el
   ellama
+  minuet
 
   # misc
   esup
