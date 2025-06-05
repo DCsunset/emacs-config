@@ -268,6 +268,7 @@ LOC can be `current' or `other'."
   (denote-prompts '(title))
   (denote-save-buffers t)
   (denote-date-format "%FT%T%z")
+  (denote-known-keywords '("life" "app" "game"))
   :custom-face
   (denote-faces-link ((t :foreground "turquoise" :underline t))))
 
