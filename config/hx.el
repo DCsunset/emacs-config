@@ -1210,7 +1210,6 @@ AT-POINT means to make sure point is at beg or end."
   :states '("insert")
   :bind
   `(("M-i" . ("complete" . company-manual-begin))
-    ("M-a" . ("ai complete" . ellama-code-complete))
     ;; set tempo-match-finder temporarily to prevent conflicts
     ("M-t" . ("tempo complete" . ,(hx :let (tempo-match-finder my-tempo-match-finder) :eval tempo-complete-tag)))))
 
