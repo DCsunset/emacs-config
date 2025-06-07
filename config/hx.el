@@ -1129,6 +1129,7 @@ AT-POINT means to make sure point is at beg or end."
     ("SPC r" . ("Query replace" . ,(hx :region :eval query-replace)))
     ("SPC R" . ("Query replace regexp" . ,(hx :region :eval query-replace-regexp)))
     ("SPC ?" . ("search symbol" . apropos))
+    ("SPC m" . ("man page" . man))
     ("SPC k" . ("show eldoc" . hx-show-eldoc))
     ("SPC u" . ("undo tree" . vundo))
     ("SPC i" . ("insert" . (keymap)))
