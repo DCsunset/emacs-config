@@ -186,8 +186,8 @@ LOC can be `current' or `other'."
 (modaled-define-keys
   :substates '("org")
   :bind
-  `(("RET" . ("org open" . ,(hx :eval (org-open 'current))))
-    ("M-RET" . ("org open (external)" . browse-url-at-point))
+  `((("RET" "<return>") . ("org open" . ,(hx :eval (org-open 'current))))
+    (("M-RET" "M-<return>") . ("org open (external)" . browse-url-at-point))
     ("' w" . ("org edit" . org-edit-special))
     ("' e" . ("org export" . org-export-dispatch))
     ("' i" . ("org insert" . (keymap)))

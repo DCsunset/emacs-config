@@ -1125,6 +1125,7 @@ AT-POINT means to make sure point is at beg or end."
                                                    (setq buffer-read-only (not buffer-read-only)))))
     ("SPC f" . ("frame" . (keymap)))
     ("SPC f RET" . ("run in new frame" . other-frame-prefix))
+    ("SPC f <return>" . ("run in new frame" . other-frame-prefix))
     ("SPC r" . ("Query replace" . ,(hx :region :eval query-replace)))
     ("SPC R" . ("Query replace regexp" . ,(hx :region :eval query-replace-regexp)))
     ("SPC ?" . ("search symbol" . apropos))
@@ -1284,7 +1285,8 @@ AT-POINT means to make sure point is at beg or end."
     ("C-s" . ("save" . hx-save))
     ("C-M-s" . ("save all" . ,(hx :eval (save-some-buffers t))))
     ("C-c" . ("abort" . hx-abort))
-    ("C-q" . ("quit" . ,(hx :eval (if (length= (frame-list) 1)
+    ("C-q" . ("quit" . ,(hx :eval (if (or (length= (frame-list) 1)
+                                          (daemonp))
                                       (save-buffers-kill-terminal)
                                     (let ((global-buffers (beframe--global-buffers)))
                                       ;; kill frame-specific buffers

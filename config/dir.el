@@ -90,7 +90,7 @@
                                                         (dired-sidebar-subtree-toggle))
                                                       #'dired-subtree-down)))))
     ;; TAB is also supported in `hx-toggle-visibility'
-    (("RET" "o") . ("open" . dired-find-file))
+    (("RET" "<return>" "o") . ("open" . dired-find-file))
     ;; run ! or & to open them separately
     ("O" . ("open (in one command)" . dired-open-marked))
     ("i" . ("toggle details" . dired-toggle-hide-details-mode))
@@ -115,7 +115,7 @@
     ("C t" . ("touch" . dired-do-touch))
     ;; use C-s or C-a to exit wdired mode
     ("' w" . ("enable wdired mode" . dired-toggle-read-only))
-    ("M-RET" . ("open (other window)" . dired-find-file-other-window))))
+    (("M-RET" "M-<return>") . ("open (other window)" . dired-find-file-other-window))))
 (modaled-enable-substate-on-state-change
   "dired"
   :states '("major")
