@@ -45,6 +45,8 @@ Returns expanded dir name on success."
 (global-so-long-mode 1)  ; faster loading for very long lines (e.g. minimized code)
 (setq ring-bell-function #'ignore)  ; disable bell
 (setopt comment-empty-lines t)
+(setopt visual-wrap-extra-indent 2)
+(global-visual-wrap-prefix-mode 1)
 
 ;; Make jump history local to each window
 (setq-default xref-history-storage 'xref-window-local-history)
