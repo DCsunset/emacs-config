@@ -27,10 +27,11 @@ with epkgs; [
   extraEpkgs.org-moderncv
 
   # language.el
-  extraEpkgs.hurl-mode
-  json-mode  # required by hurl-mode
+  eglot-booster
   extraEpkgs.combobulate
   extraEpkgs.typst-ts-mode
+  extraEpkgs.hurl-mode
+  json-mode  # required by hurl-mode
   csv-mode
   jtsx
   beancount
