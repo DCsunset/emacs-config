@@ -145,27 +145,8 @@
 ;; improve eglot performance
 (use-package eglot-booster
 	:after eglot
-  :init
 	:config
-  ;; set custom path for emacs-lsp-booster
-  (setq eglot-booster--boost
-        '("@EMACS_LSP_BOOSTER@" "--json-false-value" ":json-false" "--"))
-  ;; HACK: use custom path until https://github.com/jdtsmith/eglot-booster/issues/21 is resolved
-  (define-minor-mode my-eglot-booster-mode
-    "My eglot-booster-mode."
-    :global t
-    :group 'eglot
-    (cond
-     (my-eglot-booster-mode
-      (unless eglot-booster-io-only
-        (advice-add 'jsonrpc--json-read :around #'eglot-booster--jsonrpc--json-read))
-      (advice-add 'eglot--connect :filter-args #'eglot-booster--wrap-contact)
-      (add-hook 'eglot-server-initialized-hook #'eglot-booster--init))
-     (t
-      (advice-remove 'jsonrpc--json-read #'eglot-booster--jsonrpc--json-read)
-      (advice-remove 'eglot--connect #'eglot-booster--wrap-contact)
-      (remove-hook 'eglot-server-initialized-hook #'eglot-booster--init))))
-  (my-eglot-booster-mode))
+  (eglot-booster-mode))
 
 ;; tree-sitter (put at the end as some packages above may change auto-mode-alist)
 ;; remap major mode to ts major mode

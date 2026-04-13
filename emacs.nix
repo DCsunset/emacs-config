@@ -2,7 +2,6 @@
   lib,
   emacsPackagesFor,
   emacs,
-  emacs-lsp-booster,
   writeText,
 
   nur-dcsunset,
@@ -30,7 +29,6 @@ let
           ({
             LUA_LS_CONIFG = "${./config/lsp}/lua-ls-config.lua";
             D3_JS = "file://${nur-dcsunset.d3}/dist/d3.min.js";
-            EMACS_LSP_BOOSTER = lib.getExe emacs-lsp-booster;
           } // configVars)
           (dc-lib.readFiles [
             ./config/common.el
