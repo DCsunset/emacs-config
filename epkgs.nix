@@ -42,6 +42,7 @@ with epkgs; [
   caddyfile-mode
   lua-mode
   d2-mode
+  just-ts-mode
 
   # tree-sitter for emacs 29+
   (treesit-grammars.with-grammars (grammars: with grammars; [
@@ -67,6 +68,7 @@ with epkgs; [
     tree-sitter-nix
     tree-sitter-elisp
     tree-sitter-typst
+    tree-sitter-just
   ]))
   # modeline.el
   shrink-path

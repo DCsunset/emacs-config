@@ -129,11 +129,14 @@
     nix-mode
     lua-mode
     latex-mode
-    typst-ts-mode) . eglot-ensure)
+    typst-ts-mode
+    just-ts-mode) . eglot-ensure)
   :custom
   ;; disable event buffer (hangs frequently in js/ts)
   (eglot-events-buffer-size 0)
   :config
+  (add-to-list 'eglot-server-programs
+               '(just-ts-mode . ("just-lsp")))
   (add-to-list 'eglot-server-programs
                '(typst-ts-mode . ("tinymist")))
   (add-to-list 'eglot-server-programs
