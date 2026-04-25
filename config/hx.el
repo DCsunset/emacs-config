@@ -1058,6 +1058,13 @@ AT-POINT means to make sure point is at beg or end."
     ("s d k" . ("drag down in hierarchy (TS)" . ,(hx :rec c :eval hx-struct-drag-down)))
     ("s W" . ("wrap struct (TS)" . ,(hx :rec c :eval hx-struct-wrap)))
     ("s D" . ("delete struct (TS)" . ,(hx :rec c :eval hx-struct-delete)))
+    ;; folding
+    ("z o" . ("open fold" . kirigami-open-fold))
+    ("z O" . ("open fold (recursively)" . kirigami-open-fold-rec))
+    ("z c" . ("close fold" . kirigami-close-fold))
+    ("z z" . ("toggle fold" . kirigami-toggle-fold))
+    ("z a o" . ("open all folds" . kirigami-open-folds))
+    ("z a c" . ("close all folds" . kirigami-close-folds))
     ;; misc
     ;; M-[ won't work as it is used as CSI in kitty protocol
     ("[" . ("jump backward" . hx-jump-backward))

@@ -113,7 +113,7 @@
     rust-ts-mode
     go-ts-mode
     python-ts-mode
-    html-mode
+    html-ts-mode
     js-ts-mode
     typescript-ts-mode
     tsx-ts-mode
@@ -127,7 +127,7 @@
     yaml-ts-mode
     dockerfile-ts-mode
     nix-mode
-    lua-mode
+    lua-ts-mode
     latex-mode
     typst-ts-mode
     just-ts-mode) . eglot-ensure)
@@ -160,8 +160,10 @@
     (js-mode . jtsx-jsx-mode)
     (python-mode . python-ts-mode)
     (css-mode . css-ts-mode)
+    (html-mode . html-ts-mode)
     (js-json-mode . json-ts-mode)
     (conf-toml-mode . toml-ts-mode)
+    (lua-mode . lua-ts-mode)
     (sh-mode . bash-ts-mode)))
 
 (defun remap-ts-mode (elem)
@@ -191,3 +193,43 @@
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . jtsx-tsx-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.[jt]?sx\\'" . tsx-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+
+
+(use-package treesit-fold
+  :defer t)
+
+;; code folding (enable only one folding backend for each mode)
+(use-package kirigami
+  :defer t
+  :hook
+  ((emacs-lisp-mode
+    csv-mode
+    hurl-mode
+    caddyfile-mode
+    beancount-mode
+    jtsx-jsx-mode
+    jtsx-tsx-mode
+    d2-mode
+    haskell-mode
+    nix-mode
+    latex-mode) . outline-minor-mode)
+  ((c-ts-mode
+    c++-ts-mode
+    rust-ts-mode
+    go-ts-mode
+    python-ts-mode
+    html-ts-mode
+    js-ts-mode
+    typescript-ts-mode
+    tsx-ts-mode
+    bash-ts-mode
+    nushell-ts-mode
+    css-ts-mode
+    json-ts-mode
+    toml-ts-mode
+    yaml-ts-mode
+    dockerfile-ts-mode
+    typst-ts-mode
+    just-ts-mode
+    lua-ts-mode) . treesit-fold-mode))
+

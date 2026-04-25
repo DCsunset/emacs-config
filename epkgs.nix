@@ -28,6 +28,8 @@ with epkgs; [
 
   # language.el
   eglot-booster
+  kirigami
+  treesit-fold
   extraEpkgs.combobulate
   extraEpkgs.typst-ts-mode
   extraEpkgs.hurl-mode
@@ -66,6 +68,7 @@ with epkgs; [
     tree-sitter-typescript
     tree-sitter-tsx
     tree-sitter-nix
+    tree-sitter-lua
     tree-sitter-elisp
     tree-sitter-typst
     tree-sitter-just
