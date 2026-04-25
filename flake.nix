@@ -15,35 +15,35 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, emacs-overlay, flake-parts, nur-dcsunset, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+  outputs = inputs: let
+    inherit (inputs.nixpkgs) lib;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
 
-      imports = [
-        flake-parts.flakeModules.easyOverlay
-      ];
-
-      perSystem = { self', system, pkgs, lib, ... }: {
-        _module.args.pkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = [
-            nur-dcsunset.overlays.pkgs
-            emacs-overlay.overlays.package
-          ];
-        };
-        packages = {
-          default = self'.packages.gui;
-          gui = pkgs.callPackage ./emacs.nix {
-            dc-lib = nur-dcsunset.lib;
-            extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
-            emacs = pkgs.emacs30;
-          };
-          nox = pkgs.callPackage ./emacs.nix {
-            dc-lib = nur-dcsunset.lib;
-            extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
-            emacs = pkgs.emacs30-nox;
-          };
-        };
+    forAllSystems = f:
+      lib.genAttrs
+        systems
+        (system: f (
+          import inputs.nixpkgs {
+            inherit system;
+            overlays = with inputs; [
+              nur-dcsunset.overlays.pkgs
+              emacs-overlay.overlays.package
+            ];
+          }
+        ));
+  in {
+    packages = forAllSystems (pkgs: rec {
+      gui = pkgs.callPackage ./emacs.nix {
+        dc-lib = inputs.nur-dcsunset.lib;
+        extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
+        emacs = pkgs.emacs30;
       };
-    };
+      nox = pkgs.callPackage ./emacs.nix {
+        dc-lib = inputs.nur-dcsunset.lib;
+        extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
+        emacs = pkgs.emacs30-nox;
+      };
+      default = gui;
+    });
+  };
 }
