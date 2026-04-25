@@ -142,12 +142,6 @@
   (add-to-list 'eglot-server-programs
                '(lua-mode . ("lua-language-server" "--configpath=@LUA_LS_CONFIG@"))))
 
-;; improve eglot performance
-(use-package eglot-booster
-	:after eglot
-	:config
-  (eglot-booster-mode))
-
 ;; tree-sitter (put at the end as some packages above may change auto-mode-alist)
 ;; remap major mode to ts major mode
 (defvar ts-mode-remap-alist

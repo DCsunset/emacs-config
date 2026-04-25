@@ -27,7 +27,6 @@ with epkgs; [
   extraEpkgs.org-moderncv
 
   # language.el
-  eglot-booster
   kirigami
   treesit-fold
   extraEpkgs.combobulate
