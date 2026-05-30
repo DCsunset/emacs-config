@@ -130,7 +130,9 @@
     lua-ts-mode
     latex-mode
     typst-ts-mode
-    just-ts-mode) . eglot-ensure)
+    just-ts-mode
+    org-mode
+    markdown-mode) . eglot-ensure)
   :custom
   ;; disable event buffer (hangs frequently in js/ts)
   (eglot-events-buffer-size 0)
@@ -140,7 +142,11 @@
   (add-to-list 'eglot-server-programs
                '(typst-ts-mode . ("tinymist")))
   (add-to-list 'eglot-server-programs
-               '(lua-mode . ("lua-language-server" "--configpath=@LUA_LS_CONFIG@"))))
+               '(lua-mode . ("lua-language-server" "--configpath=@LUA_LS_CONFIG@")))
+  (add-to-list 'eglot-server-programs
+               '(org-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(markdown-mode . ("harper-ls" "--stdio"))))
 
 ;; tree-sitter (put at the end as some packages above may change auto-mode-alist)
 ;; remap major mode to ts major mode
