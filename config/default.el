@@ -234,7 +234,7 @@
 (modaled-enable-substate-on-state-change
   "magit"
   :states '("normal" "select")
-  :major '(magit-status-mode magit-log-mode))
+  :major '(magit-status-mode magit-log-mode magit-revision-mode))
 
 
 ;;; vterm (insert as default state)

@@ -836,7 +836,7 @@ AT-POINT means to make sure point is at beg or end."
   (interactive)
   (pcase major-mode
    ('org-mode (org-cycle))
-   ('magit-status-mode (call-interactively #'magit-section-toggle))
+   ((or 'magit-status-mode 'magit-revision-mode) (call-interactively #'magit-section-toggle))
    ('dired-sidebar-mode (dired-sidebar-subtree-toggle))
    ((or 'dired-mode 'wdired-mode) (dired-find-file))))
 
