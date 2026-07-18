@@ -146,7 +146,14 @@
   (add-to-list 'eglot-server-programs
                '(org-mode . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs
-               '(markdown-mode . ("harper-ls" "--stdio"))))
+               '(markdown-mode . ("harper-ls" "--stdio")))
+  ;; lsp configurations
+  (setq-default eglot-workspace-configuration
+                '(:harper-ls (:userDictPath ""
+                              :workspaceDictPath ""
+                              :linters (:Spaces :json-false
+                                        :Excellent :json-false)))))
+
 
 ;; tree-sitter (put at the end as some packages above may change auto-mode-alist)
 ;; remap major mode to ts major mode
