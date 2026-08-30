@@ -135,7 +135,11 @@
     markdown-mode) . eglot-ensure)
   :custom
   ;; disable event buffer (hangs frequently in js/ts)
-  (eglot-events-buffer-size 0)
+  (eglot-events-buffer-config '(:size 0 :format short))
+  ;; shutdown server when all buffer closed
+  (eglot-autoshutdown t)
+  ;; prevent eglot blocking on initial connection
+  (eglot-sync-connect nil)
   :config
   (add-to-list 'eglot-server-programs
                '(just-ts-mode . ("just-lsp")))

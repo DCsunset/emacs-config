@@ -19,6 +19,13 @@ Returns expanded dir name on success."
       dir-path)))
 
 
+;;; common
+
+;; increase gc threshold to provide better performance
+(setopt gc-cons-threshold (* 100 1024 1024))
+;; increase efficiency when reading from subprocesses
+(setq read-process-output-max (* 1024 1024))
+
 ;;; font
 
 ;; Set default font and size for GUI
