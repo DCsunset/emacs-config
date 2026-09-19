@@ -8,7 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
-    flake-parts.url = "github:hercules-ci/flake-parts";
     nur-dcsunset = {
       url = "github:DCsunset/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,12 +35,12 @@
       gui = pkgs.callPackage ./emacs.nix {
         dc-lib = inputs.nur-dcsunset.lib;
         extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
-        emacs = pkgs.emacs30;
+        emacs = pkgs.emacs;
       };
       nox = pkgs.callPackage ./emacs.nix {
         dc-lib = inputs.nur-dcsunset.lib;
         extraEpkgs = pkgs.nur-dcsunset.emacsPackages;
-        emacs = pkgs.emacs30-nox;
+        emacs = pkgs.emacs-nox;
       };
       default = gui;
     });
