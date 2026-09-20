@@ -130,41 +130,34 @@
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  ;; use corfu settings
+  (completion-category-defaults nil))
 
 ;;; icons for completion UI in minibuffer
 (use-package nerd-icons-completion
   :config
   (nerd-icons-completion-mode))
 
-;;; company completion
-(use-package company
+;;; corfu completion
+(use-package corfu
   :hook
-  (after-init . global-company-mode)
-  :bind (:map company-active-map
-              ;; complete selection using tab
-              ;; (must use TAB for terminal and <tab> for gui)
-              ("TAB" . company-complete-selection)
-              ("<tab>" . company-complete-selection)
-              ("S-TAB" . company-complete-common)
-              ("S-<tab>" . company-complete-common)
-              ;; unbind following keys to make the default keybindings work
-              ("RET" . nil)
-              ("<return>" . nil)
-              ("C-w" . nil)
-              ("<escape>" . (lambda () (interactive) (company-abort) (modaled-set-main-state))))
+  (after-init . global-corfu-mode)
   :custom
-  ;; complete on 2 chars instead of 3
-  (company-minimum-prefix-length 2)
-  ;; prevent completing with wrong cases
-  (company-dabbrev-downcase nil)
-  (company-dabbrev-ignore-case nil)
-  ;; cycle candidates' selection
-  (company-selection-wrap-around t)
-  (company-require-match nil)
-  (company-transformers '(company-sort-prefer-same-case-prefix)))
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.1)
+  :bind
+  (:map corfu-map
+        ;; do not insert on enter
+        ("RET" . nil)))
 
-;; Manage popup window
+;;; eldoc popup box
+(use-package eldoc-box
+  :defer t)
+
+;;; Manage popup window
 (use-package popwin
   :hook
   (after-init . popwin-mode)
@@ -173,7 +166,7 @@
   (add-to-list 'popwin:special-display-config '(help-mode :stick t))
   (add-to-list 'popwin:special-display-config '("\\*eldoc.*\\*" :regexp t :noselect t)))
 
-;; git
+;;; git
 (use-package diff-hl
   :hook
   (after-init . global-diff-hl-mode)

@@ -825,12 +825,6 @@ AT-POINT means to make sure point is at beg or end."
   (remove-hook 'popwin:after-popup-hook 'hx--hide-popup-on-next-command)
   (add-hook 'pre-command-hook 'hx--hide-popup))
 
-(defun hx-show-eldoc ()
-  "Show doc at point with `eldoc' temporarily."
-  (interactive)
-  (call-interactively #'eldoc)
-  (add-hook 'popwin:after-popup-hook 'hx--hide-popup-on-next-command))
-
 (defun hx-toggle-visibility ()
   "Toggle visibility."
   (interactive)
@@ -1141,7 +1135,7 @@ AT-POINT means to make sure point is at beg or end."
     ("SPC R" . ("Query replace regexp" . ,(hx :region :eval query-replace-regexp)))
     ("SPC ?" . ("search symbol" . apropos))
     ("SPC m" . ("man page" . man))
-    ("SPC k" . ("show eldoc" . hx-show-eldoc))
+    ("SPC k" . ("show eldoc" . eldoc-box-help-at-point))
     ("SPC u" . ("undo tree" . vundo))
     ("SPC i" . ("insert" . (keymap)))
     ("SPC i e" . ("insert emoji" . emoji-search))
@@ -1222,7 +1216,7 @@ AT-POINT means to make sure point is at beg or end."
 (modaled-define-keys
   :states '("insert")
   :bind
-  `(("M-i" . ("complete" . company-manual-begin))
+  `(("M-i" . ("complete" . completion-at-point))
     ;; set tempo-match-finder temporarily to prevent conflicts
     ("M-t" . ("tempo complete" . ,(hx :let (tempo-match-finder my-tempo-match-finder) :eval tempo-complete-tag)))))
 
@@ -1293,16 +1287,15 @@ AT-POINT means to make sure point is at beg or end."
     ("C-s" . ("save" . hx-save))
     ("C-M-s" . ("save all" . ,(hx :eval (save-some-buffers t))))
     ("C-c" . ("abort" . hx-abort))
-    ("C-q" . ("quit" . ,(hx :eval (if (or (length= (frame-list) 1)
+    ("C-q" . ("quit" . ,(hx :eval (if (or (length= (visible-frame-list) 1)
                                           (daemonp))
                                       (save-buffers-kill-terminal)
-                                    (let ((global-buffers (beframe--global-buffers)))
-                                      ;; kill frame-specific buffers
-                                      (mapc #'kill-buffer
-                                            (seq-filter
-                                             (lambda (buf) (not (member buf global-buffers)))
-                                             (beframe-buffer-list)))
-                                      (delete-frame))))))))
+                                    ;; kill frame-specific buffers
+                                    (mapc #'kill-buffer
+                                          (seq-filter
+                                           (lambda (buf) (not (member buf beframe-global-buffers)))
+                                           (beframe-buffer-list)))
+                                    (delete-frame)))))))
 
 (modaled-define-keys
   :states '("select" "insert")

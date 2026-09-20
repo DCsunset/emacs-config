@@ -121,6 +121,7 @@ with epkgs; [
   blamer
   magit
   magit-todos
-  company
   isearch-mb
+  corfu
+  eldoc-box
 ]
