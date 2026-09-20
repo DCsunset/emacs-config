@@ -96,14 +96,13 @@ This is necessary to distinguish the meta key and actual escape in terminal."
     (let ((term (frame-terminal frame)))
       (when (and
              (eq (terminal-live-p term) t)  ; only patch char only terminal
-             (not (terminal-parameter term 'my-esc-map))  ; not patched already
-             (or (not (kkp--this-terminal-supports-kkp-p))  ; it conflicts with kkp
-                 (daemonp)))  ; HACK: kkp doesn't work for daemon
+             (not (terminal-parameter term 'my-esc-map)))  ; not patched already
         (let ((my-esc-map (keymap-lookup input-decode-map "ESC")))
           ; remember the old map for restoration later and prevent patching it again
           (set-terminal-parameter term 'my-esc-map my-esc-map)
           (keymap-set input-decode-map "ESC"
-                      `(menu-item "" ,my-esc-map :filter ,#'my-esc--filter)))))))
+                      `(menu-item "" ,my-esc-map :filter ,#'my-esc--filter))
+          (message "my-esc-map activated"))))))
 
 (defun my-esc--deinit (frame)
   "Disable escape translation in `input-decode-map' for terminal FRAME."
@@ -140,9 +139,10 @@ This is necessary to distinguish the meta key and actual escape in terminal."
   :demand t)
 
 (use-package kkp
+  :demand t
   :hook
-  (after-init . my-esc-mode)
-  (after-init . global-kkp-mode))
+  (after-init . global-kkp-mode)
+  (after-init . my-esc-mode))
 
 
 ;; faster loading for large files by chunks
