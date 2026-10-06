@@ -101,7 +101,9 @@
     :major '(typst-ts-mode)))
 
 (use-package qml-ts-mode
-  :mode "\\.qml\\'")
+  :mode "\\.qml\\'"
+  :custom
+  (qml-ts-mode-indent-offset 2))
 
 (use-package combobulate
   :defer t)
