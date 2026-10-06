@@ -100,6 +100,9 @@
     :states '("normal" "select")
     :major '(typst-ts-mode)))
 
+(use-package qml-ts-mode
+  :mode "\\.qml\\'")
+
 (use-package combobulate
   :defer t)
 
@@ -132,7 +135,8 @@
     typst-ts-mode
     just-ts-mode
     org-mode
-    markdown-mode) . eglot-ensure)
+    markdown-mode
+    qml-ts-mode) . eglot-ensure)
   :custom
   ;; disable event buffer (hangs frequently in js/ts)
   (eglot-events-buffer-config '(:size 0 :format short))
@@ -151,6 +155,8 @@
                '(org-mode . ("harper-ls" "--stdio")))
   (add-to-list 'eglot-server-programs
                '(markdown-mode . ("harper-ls" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(qml-ts-mode . ("qmlls")))
   ;; lsp configurations
   (setq-default eglot-workspace-configuration
                 '(:harper-ls (:userDictPath ""

@@ -32,6 +32,7 @@ with epkgs; [
   extraEpkgs.combobulate
   extraEpkgs.typst-ts-mode
   extraEpkgs.hurl-mode
+  extraEpkgs.qml-ts-mode
   json-mode  # required by hurl-mode
   csv-mode
   jtsx
@@ -71,6 +72,7 @@ with epkgs; [
     tree-sitter-elisp
     tree-sitter-typst
     tree-sitter-just
+    tree-sitter-qmljs
   ]))
   # modeline.el
   shrink-path
