@@ -25,6 +25,11 @@ Returns expanded dir name on success."
 (setopt gc-cons-threshold (* 100 1024 1024))
 ;; increase efficiency when reading from subprocesses
 (setq read-process-output-max (* 1024 1024))
+;; prevents Emacs from compacting font caches to improve performance
+(setq inhibit-compacting-font-caches t)
+;; improve responsiveness
+(setq redisplay-skip-fontification-on-input t)
+(setq fast-but-imprecise-scrolling t)
 
 ;;; font
 
