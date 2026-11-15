@@ -67,6 +67,7 @@ with epkgs; [
     tree-sitter-javascript
     tree-sitter-typescript
     tree-sitter-tsx
+    tree-sitter-jsdoc
     tree-sitter-nix
     tree-sitter-lua
     tree-sitter-elisp
